@@ -34,7 +34,7 @@ def main_menu():
     print("MAIN MENU")
     print("********")
     print("1. Get Students Info")
-    print("2. Get Course Info")
+    print("2. Students Menu")
     print("3. Course Menu")
     print("4. Remove Student")
     print("5. Exit")
@@ -53,10 +53,7 @@ def main_menu():
             print(df)
             break
         elif choice == 2:
-            student_course = SHEET.worksheet('course')
-            data = student_course.get_all_values()
-            df = pd.DataFrame(data,columns=['',''])
-            print(df)
+            students()
             break
         elif choice == 3:
             course()
@@ -83,7 +80,7 @@ def students():
     while True:
         choice = input("Enter Choice: \n")
         if choice == "1":
-            print("you choose add")
+            add_new_student()
             break
         elif choice == "2":
             list_student = SHEET.worksheet('student')
@@ -99,7 +96,15 @@ def students():
         else:
             print("Invalid choice !!!")
 
-    students()
+def add_new_student():
+    print("Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
+    print("Example:John,197908167777,76895600000,john@xxxx.com")
+    data_str = input("Enter your data here:")
+    course_data=data_str.split(",") #the values should be a list
+    student_course = SHEET.worksheet('student')
+    student_course.append_row(course_data, table_range="A1:D1")
+    print(f"Student info updated successfully")
+
 
 def course():
     """
@@ -109,8 +114,8 @@ def course():
     os.system('clear')
     print("COURSE MENU")
     print("*********")
-    print("1. Register Student to course")
-    print("2. Unregister Student from")
+    print("1. Register Student")
+    print("2. Unregister Student")
     print("0. Main Menu")
     print("*********")
 
@@ -120,7 +125,7 @@ def course():
             register_course()
             break
         elif choice == 2:
-            print("you choose unregister")
+            unregister_course()
             break
         elif choice == 0:
             main_menu()
@@ -136,6 +141,20 @@ def register_course():
     student_course = SHEET.worksheet('course')
     student_course.append_row(course_data, table_range="A1:B1")
     print(f"Student registered successfully")
+def unregister_course():
+    print("Plaese enter student name to unregister from course.")
+    '''print("Plaese enter course name(classical/modern):")'''
+    print("Example:John,classical")
+    data = input("Enter your data here:")
+    student_course = SHEET.worksheet('course')
+    cell = student_course.find(data)
+    while cell == None:
+       print(f"Please enter a valid student name")
+       data = input("Enter your data here:")
+       cell = student_course.find(data)
+    row_num = cell.row
+    student_course.delete_rows(row_num)
+    print(f" {data} has been unregistered successfully")
 
 def main():
     """

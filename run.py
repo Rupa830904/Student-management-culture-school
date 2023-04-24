@@ -36,8 +36,7 @@ def main_menu():
     print("1. Get Students Info")
     print("2. Students Menu")
     print("3. Course Menu")
-    print("4. Remove Student")
-    print("5. Exit")
+    print("4. Exit")
     print("*********")
     while True:
         try:
@@ -51,14 +50,14 @@ def main_menu():
             data = list_student.get_all_values()
             df = pd.DataFrame(data,columns=['','','',''])
             print(df)
-            break
+            continue
         elif choice == 2:
             students()
             break
         elif choice == 3:
             course()
             break
-        elif choice == 5:
+        elif choice == 4:
             quit ()
             break
         else:
@@ -88,7 +87,7 @@ def students():
             print(data)
             break
         elif choice == "3":
-            print(" you choose remove")
+            del_student()
             break
         elif choice == 0:
             main_menu()
@@ -101,10 +100,21 @@ def add_new_student():
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
     course_data=data_str.split(",") #the values should be a list
-    student_course = SHEET.worksheet('student')
-    student_course.append_row(course_data, table_range="A1:D1")
+    list_student = SHEET.worksheet('student')
+    list_student.append_row(course_data, table_range="A1:D1")
     print(f"Student info updated successfully")
 
+def del_student():
+    name_str = input("Plaese enter Name the name of the student:")
+    list_student = SHEET.worksheet('student')
+    cell = list_student.find(name_str)
+    while cell == None:
+       name_str = input("Please enter the valid student name to remove:")
+       cell = list_student.find(name_str)
+    row_num = cell.row
+    list_student.delete_rows(row_num)
+    print(f"Student {name_str} has been removed.")
+    
 
 def course():
     """

@@ -132,7 +132,7 @@ def course():
             break
         else:
             print("Invalid choice !!!")
-def register_course():
+'''def register_course():
     print("Plaese enter student name to register for course.")
     print("Plaese enter course name(classical/modern):")
     print("Example:John,classical")
@@ -140,21 +140,50 @@ def register_course():
     course_data=data_str.split(",") #the values should be a list
     student_course = SHEET.worksheet('course')
     student_course.append_row(course_data, table_range="A1:B1")
-    print(f"Student registered successfully")
+    print(f"Student registered successfully")'''
+def register_course():
+    name_str = input("Please enter the student name to register:")
+    classical_col = 1  # Column for classical course
+    modern_col = 2 # Column for modern course
+    course_str = input("Please enter the course name to register(Classical/Modern):")
+    if course_str == "Classical":
+       student_course = SHEET.worksheet('course')
+       last_row = len(student_course.get_all_values())
+       student_course.update_cell(last_row + 1, classical_col, name_str)
+       student_course.update_cell(last_row + 1, modern_col,'')
+       print(f"Student registered successfully")
+    elif course_str == "Modern":
+       student_course = SHEET.worksheet('course')
+       last_row = len(student_course.get_all_values())
+       student_course.update_cell(last_row + 1, classical_col,'')
+       student_course.update_cell(last_row + 1, modern_col,name_str)
+       print(f"Student registered successfully")
+    elif course_str == "Both":
+       student_course = SHEET.worksheet('course')
+       last_row = len(student_course.get_all_values())
+       student_course.update_cell(last_row + 1, classical_col,name_str)
+       student_course.update_cell(last_row + 1, modern_col,name_str)
+       print(f"Student registered successfully")
+    else :
+        print(f"Sorry we don't have that course yet")
+
+    
 def unregister_course():
-    print("Plaese enter student name to unregister from course.")
-    '''print("Plaese enter course name(classical/modern):")'''
-    print("Example:John,classical")
-    data = input("Enter your data here:")
+    name_str = input("Please enter the student name to unregister:")
+    course_str = input("Please enter the course name to unregister(Classical/Modern/Both) from:")
     student_course = SHEET.worksheet('course')
-    cell = student_course.find(data)
+    cell = student_course.find(name_str)
     while cell == None:
        print(f"Please enter a valid student name")
        data = input("Enter your data here:")
        cell = student_course.find(data)
     row_num = cell.row
-    student_course.delete_rows(row_num)
-    print(f" {data} has been unregistered successfully")
+    if course_str == "Classical":
+       cell = student_course.findall(query=name_str, in_column=1)
+       student_course.update_cell(cell, '')
+    elif course_str == "Both":
+     student_course.delete_rows(row_num)
+     print(f" {data} has been unregistered successfully")
 
 def main():
     """

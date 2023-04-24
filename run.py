@@ -145,7 +145,7 @@ def register_course():
     name_str = input("Please enter the student name to register:")
     classical_col = 1  # Column for classical course
     modern_col = 2 # Column for modern course
-    course_str = input("Please enter the course name to register(Classical/Modern):")
+    course_str = input("Please enter the course name to register(Classical/Modern/Both):")
     if course_str == "Classical":
        student_course = SHEET.worksheet('course')
        last_row = len(student_course.get_all_values())
@@ -175,15 +175,37 @@ def unregister_course():
     cell = student_course.find(name_str)
     while cell == None:
        print(f"Please enter a valid student name")
-       data = input("Enter your data here:")
-       cell = student_course.find(data)
-    row_num = cell.row
+       name_str = input("Please enter the valid student name to unregister:")
+       cell = student_course.find(name_str)
     if course_str == "Classical":
-       cell = student_course.findall(query=name_str, in_column=1)
-       student_course.update_cell(cell, '')
+       classical_cell = student_course.find(query=name_str, in_column=1)
+       modern_cell = student_course.find(query=name_str, in_column=2)
+       if modern_cell == None:
+        row_num = cell.row
+        student_course.delete_rows(row_num)
+        print(f" {name_str} has been unregistered successfully {course_str}")
+       else:
+        row_num = cell.row
+        student_course.update_cell(row_num,1,'')
+        print(f" {name_str} has been unregistered successfully from {course_str}")
+       '''print(cell)
+       row_num = cell.row
+       print(row_num)'''
+    elif course_str == "Modern":
+       classical_cell = student_course.find(query=name_str, in_column=1)
+       modern_cell = student_course.find(query=name_str, in_column=2)
+       if classical_cell == None:
+        row_num = cell.row
+        student_course.delete_rows(row_num)
+        print(f" {name_str} has been unregistered successfully {course_str}")
+       else:
+        row_num = cell.row
+        student_course.update_cell(row_num,2,'')
+        print(f" {name_str} has been unregistered successfully from {course_str}")
     elif course_str == "Both":
+     row_num = cell.row
      student_course.delete_rows(row_num)
-     print(f" {data} has been unregistered successfully")
+     print(f" {name_str} has been unregistered successfully")
 
 def main():
     """

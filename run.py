@@ -182,17 +182,17 @@ def unregister_course():
     course_str = unstrip_course_str.strip() # Strip the user input
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
-    print( cell )
-    while cell == None:
+    print(cell)
+    while cell is None:
         print(f"Please enter a valid student name")
         name_str = input("Please enter the valid student name to unregister:")
         cell = student_course.find(name_str)
         row_num = cell.row
-    '''row_num = cell.row'''
+    row_num = cell.row
     if course_str == "Classical":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
-        if modern_cell == None:
+        if modern_cell is None:
             row_num_1 = classical_cell.row
             student_course.delete_rows(row_num_1)
             print(f" {name_str} has been unregistered successfully {course_str}")
@@ -203,7 +203,9 @@ def unregister_course():
     elif course_str == "Modern":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
-        if classical_cell == None:
+        if modern_cell is None:
+            print(f" {name_str} is not registered in {course_str}")
+        elif classical_cell is None:
             row_num_2 = modern_cell.row
             student_course.delete_rows(row_num_2)
             print(f" {name_str} has been unregistered successfully {course_str}")

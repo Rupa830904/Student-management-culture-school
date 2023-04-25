@@ -36,10 +36,9 @@ def main_menu():
     os.system('clear')
     print(Fore.CYAN + "MAIN MENU")
     print("********")
-    print("1. Get Students Info")
-    print("2. Students Menu")
-    print("3. Course Menu")
-    print("4. Exit")
+    print("1. Students Menu")
+    print("2. Course Menu")
+    print("3. Exit")
     print("*********")
     while True:
         try:
@@ -49,18 +48,12 @@ def main_menu():
             continue
 
         if choice == 1:
-            list_student = SHEET.worksheet('student')
-            data = list_student.get_all_values()
-            df = pd.DataFrame(data,columns=['','','',''])
-            print(df)
-            continue
-        elif choice == 2:
             students()
             break
-        elif choice == 3:
+        elif choice == 2:
             course()
             break
-        elif choice == 4:
+        elif choice == 3:
             quit ()
             break
         else:
@@ -74,7 +67,7 @@ def students():
     print(Fore.GREEN + "STUDENT MANAGEMENT")
     print("*********")
     print("1. Add new student")
-    print("2. List Students")
+    print("2. Update Student Info")
     print("3. Remove student")
     print("0. Main Menu")
     print("*********")
@@ -85,9 +78,7 @@ def students():
             add_new_student()
             break
         elif choice == "2":
-            list_student = SHEET.worksheet('student')
-            data = list_student.col_values(1)
-            print(data)
+            update_student()
             break
         elif choice == "3":
             del_student()
@@ -102,21 +93,52 @@ def add_new_student():
     print(Fore.WHITE + "Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
-    course_data=data_str.split(",") #the values should be a list
+    course_data = data_str.split(",")  # the values should be a list
     list_student = SHEET.worksheet('student')
     list_student.append_row(course_data, table_range="A1:D1")
     print(f"Student info updated successfully")
+
 
 def del_student():
     name_str = input("Plaese enter Name the name of the student:")
     list_student = SHEET.worksheet('student')
     cell = list_student.find(name_str)
-    while cell == None:
-       name_str = input("Please enter the valid student name to remove:")
-       cell = list_student.find(name_str)
+    while cell is None:
+        name_str = input("Please enter the valid student name to remove:")
+        cell = list_student.find(name_str)
     row_num = cell.row
     list_student.delete_rows(row_num)
     print(f"Student {name_str} has been removed.")
+
+
+def update_student():
+
+    os.system('clear')
+
+    while True:
+        list_student = SHEET.worksheet('student')
+        data = list_student.get_all_values()
+        df = pd.DataFrame(data, columns=['', '', '', ''])
+        print(df)
+        name_str = input("Please choose the student to update info:")
+        cell = list_student.find(name_str)
+        while cell is None:
+            name_str = input("Please enter the valid student from above table:")
+            cell = list_student.find(name_str)
+        row_num = cell.row
+        print("1. Update Mobile No")
+        print("2. Update Email")
+        choice = input("Enter Choice: \n")
+        if choice == "1":
+            mobile_str = input("Please enter new mobile:")
+            list_student.update_cell(row_num, 3, mobile_str)
+            print(f"Mobile Number registered successfully")
+            break
+        elif choice == "2":
+            mail_str = input("Please enter new email:")
+            list_student.update_cell(row_num, 4, mail_str)
+            print(f"Email registered successfully")
+            break
     
 
 def course():
@@ -154,23 +176,31 @@ def register_course():
     unstrip_course_str = input("Please enter the course name to register(Classical/Modern/Both):")
     course_str = unstrip_course_str.strip() # Strip the user input
     if course_str == "Classical":
-       student_course = SHEET.worksheet('course')
-       last_row = len(student_course.get_all_values())
-       student_course.update_cell(last_row + 1, classical_col, name_str)
-       student_course.update_cell(last_row + 1, modern_col, '')
-       print(f"Student registered successfully")
+        student_course = SHEET.worksheet('course')
+        classical_cell = student_course.find(query=name_str, in_column=1)
+        if classical_cell is None:
+            last_row = len(student_course.get_all_values())
+            student_course.update_cell(last_row + 1, classical_col, name_str)
+            student_course.update_cell(last_row + 1, modern_col, '')
+            print(f"Student registered successfully")
+        else:
+            print(f"Student is already registered to {course_str}")
     elif course_str == "Modern":
-       student_course = SHEET.worksheet('course')
-       last_row = len(student_course.get_all_values())
-       student_course.update_cell(last_row + 1, classical_col, '')
-       student_course.update_cell(last_row + 1, modern_col, name_str)
-       print(f"Student registered successfully")
+        student_course = SHEET.worksheet('course')
+        modern_cell = student_course.find(query=name_str, in_column=2)
+        if modern_cell is None:
+            last_row = len(student_course.get_all_values())
+            student_course.update_cell(last_row + 1, classical_col, '')
+            student_course.update_cell(last_row + 1, modern_col, name_str)
+            print(f"Student registered successfully")
+        else:
+            print(f"Student is already registered to {course_str}")
     elif course_str == "Both":
-       student_course = SHEET.worksheet('course')
-       last_row = len(student_course.get_all_values())
-       student_course.update_cell(last_row + 1, classical_col, name_str)
-       student_course.update_cell(last_row + 1, modern_col, name_str)
-       print(f"Student registered successfully")
+        student_course = SHEET.worksheet('course')
+        last_row = len(student_course.get_all_values())
+        student_course.update_cell(last_row + 1, classical_col, name_str)
+        student_course.update_cell(last_row + 1, modern_col, name_str)
+        print(f"Student registered successfully")
     else :
         print(f"Sorry we don't have that course yet")
 
@@ -187,12 +217,13 @@ def unregister_course():
         print(f"Please enter a valid student name")
         name_str = input("Please enter the valid student name to unregister:")
         cell = student_course.find(name_str)
-        row_num = cell.row
     row_num = cell.row
     if course_str == "Classical":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
-        if modern_cell is None:
+        if classical_cell is None:
+            print(f" {name_str} is not registered in {course_str}")
+        elif modern_cell is None:
             row_num_1 = classical_cell.row
             student_course.delete_rows(row_num_1)
             print(f" {name_str} has been unregistered successfully {course_str}")
@@ -224,5 +255,5 @@ def main():
     main_menu()
 
 
-print("\n\nWelcome to Student Management for Indian Dance class in culture school.\n")
+print("\n\nWelcome to Culture school Student Management.\n")
 main()

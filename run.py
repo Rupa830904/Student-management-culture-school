@@ -182,41 +182,38 @@ def unregister_course():
     course_str = unstrip_course_str.strip() # Strip the user input
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
-    print (cell)
-    while cell.value == None:
-       print(f"Please enter a valid student name")
-       name_str = input("Please enter the valid student name to unregister:")
-       cell = student_course.find(name_str)
+    print( cell )
+    while cell == None:
+        print(f"Please enter a valid student name")
+        name_str = input("Please enter the valid student name to unregister:")
+        cell = student_course.find(name_str)
+        row_num = cell.row
     '''row_num = cell.row'''
-    
     if course_str == "Classical":
-       classical_cell = student_course.find(query=name_str, in_column=1)
-       modern_cell = student_course.find(query=name_str, in_column=2)
-       if modern_cell == None:
-        row_num_1 = classical_cell.row
-        student_course.delete_rows(row_num_1)
-        print(f" {name_str} has been unregistered successfully {course_str}")
-       else:   
-        row_num_1 = classical_cell.row
-        student_course.update_cell(row_num_1,1,'')
-        print(f" {name_str} has been unregistered successfully from {course_str}")
-       '''print(cell)
-       row_num = cell.row
-       print(row_num)'''
+        classical_cell = student_course.find(query=name_str, in_column=1)
+        modern_cell = student_course.find(query=name_str, in_column=2)
+        if modern_cell == None:
+            row_num_1 = classical_cell.row
+            student_course.delete_rows(row_num_1)
+            print(f" {name_str} has been unregistered successfully {course_str}")
+        else:   
+            row_num_1 = classical_cell.row
+            student_course.update_cell(row_num_1, 1 , '')
+            print(f" {name_str} has been unregistered successfully {course_str}")
     elif course_str == "Modern":
-       classical_cell = student_course.find(query=name_str, in_column=1)
-       modern_cell = student_course.find(query=name_str, in_column=2)
-       if classical_cell == None:
-        row_num_2 = modern_cell.row
-        student_course.delete_rows(row_num_2)
-        print(f" {name_str} has been unregistered successfully {course_str}")
-       else:
-        row_num_2 = modern_cell.row
-        student_course.update_cell(row_num,2,'')
-        print(f" {name_str} has been unregistered successfully from {course_str}")
+        classical_cell = student_course.find(query=name_str, in_column=1)
+        modern_cell = student_course.find(query=name_str, in_column=2)
+        if classical_cell == None:
+            row_num_2 = modern_cell.row
+            student_course.delete_rows(row_num_2)
+            print(f" {name_str} has been unregistered successfully {course_str}")
+        else:
+            row_num_2 = modern_cell.row
+            student_course.update_cell(row_num,2,'')
+            print(f" {name_str} has been unregistered successfully from {course_str}")
     elif course_str == "Both":
-     student_course.delete_rows(row_num)
-     print(f" {name_str} has been unregistered successfully")
+        student_course.delete_rows(row_num)
+        print(f" {name_str} has been unregistered successfully")
 
 def main():
     """

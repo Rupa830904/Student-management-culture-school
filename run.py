@@ -54,7 +54,7 @@ def main_menu():
             course()
             break
         elif choice == 3:
-            quit ()
+            quit()
             break
         else:
             print("Invalid choice !!!")
@@ -92,6 +92,22 @@ def students():
 def add_new_student():
     print(Fore.WHITE + "Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
+    print("Please enter the personal number.:\n")
+    while True:
+        try:
+            pn_str = int(input("Enter the personal number: \n"))
+            break
+        except ValueError:
+            print("Personal number can only be digits !")
+            continue
+    print("Please enter the mobile no.:\n")
+    while True:
+        try:
+            mobile_str = int(input("Enter the mobile no: \n"))
+            break
+        except ValueError:
+            print("Mobile number can only be digits !")
+            continue
     data_str = input("Enter your data here:")
     course_data = data_str.split(",")  # the values should be a list
     list_student = SHEET.worksheet('student')
@@ -100,15 +116,22 @@ def add_new_student():
 
 
 def del_student():
-    name_str = input("Plaese enter Name the name of the student:")
+    unstrip_name_str = input("Plaese enter Name the name of the student:")
+    name_str = unstrip_name_str.strip() # Strip the user input
     list_student = SHEET.worksheet('student')
-    cell = list_student.find(name_str)
-    while cell is None:
+    student_course = SHEET.worksheet('course')
+    student_cell = list_student.find(name_str)
+    course_cell = student_course.find(name_str)
+    print(course_cell)
+    while student_cell is None:
         name_str = input("Please enter the valid student name to remove:")
-        cell = list_student.find(name_str)
-    row_num = cell.row
-    list_student.delete_rows(row_num)
-    print(f"Student {name_str} has been removed.")
+        student_cell = list_student.find(name_str)
+    row_num = student_cell.row
+    if course_cell is None:
+        list_student.delete_rows(row_num)
+        print(f"Student {name_str} has been removed.")
+    else:
+        print(f"Student {name_str} must be unregistred from course first.")
 
 
 def update_student():
@@ -226,11 +249,11 @@ def unregister_course():
         elif modern_cell is None:
             row_num_1 = classical_cell.row
             student_course.delete_rows(row_num_1)
-            print(f" {name_str} has been unregistered successfully {course_str}")
-        else:   
+            print(f" {name_str} unregistered successfully from {course_str}")
+        else:
             row_num_1 = classical_cell.row
-            student_course.update_cell(row_num_1, 1 , '')
-            print(f" {name_str} has been unregistered successfully {course_str}")
+            student_course.update_cell(row_num_1, 1, '')
+            print(f" {name_str} unregistered successfully from {course_str}")
     elif course_str == "Modern":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
@@ -239,11 +262,11 @@ def unregister_course():
         elif classical_cell is None:
             row_num_2 = modern_cell.row
             student_course.delete_rows(row_num_2)
-            print(f" {name_str} has been unregistered successfully {course_str}")
+            print(f" {name_str} unregistered successfully from {course_str}")
         else:
             row_num_2 = modern_cell.row
-            student_course.update_cell(row_num,2,'')
-            print(f" {name_str} has been unregistered successfully from {course_str}")
+            student_course.update_cell(row_num, 2, '')
+            print(f" {name_str} unregistered successfully from {course_str}")
     elif course_str == "Both":
         student_course.delete_rows(row_num)
         print(f" {name_str} has been unregistered successfully")

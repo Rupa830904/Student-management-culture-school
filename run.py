@@ -15,6 +15,7 @@ if os.path.exists("env.py"):
 from colorama import just_fix_windows_console
 just_fix_windows_console()
 from colorama import Fore, Back, Style
+from email_validator import validate_email, EmailNotValidError
 
 
 SCOPE = [
@@ -92,28 +93,46 @@ def students():
 def add_new_student():
     print(Fore.WHITE + "Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
-    print("Please enter the personal number.:\n")
+    data_str = input("Enter your data here:")
+    student_data = data_str.split(",")  # the values should be a list
+    print(student_data[1])
+    '''pn_str = student_data[1]'''
     while True:
         try:
-            pn_str = int(input("Enter the personal number: \n"))
+            int(student_data[1])
             break
         except ValueError:
             print("Personal number can only be digits !")
-            continue
-    print("Please enter the mobile no.:\n")
+            quit()
     while True:
         try:
-            mobile_str = int(input("Enter the mobile no: \n"))
+            int(student_data[2])
             break
         except ValueError:
             print("Mobile number can only be digits !")
-            continue
-    data_str = input("Enter your data here:")
-    course_data = data_str.split(",")  # the values should be a list
+            quit()
+    while True:
+        try:
+        # validate and get info
+           validate_email(student_data[3])
+           break
+        except EmailNotValidError as e:
+           print(str(e))
+           quit()
     list_student = SHEET.worksheet('student')
-    list_student.append_row(course_data, table_range="A1:D1")
+    list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
 
+
+def check(email):
+    try:
+        # validate and get info
+        v = validate_email(email)
+        # replace with normalized form
+        '''print("True")'''
+    except EmailNotValidError as e:
+        # email is not valid, exception message is human-readable
+        print(str(e))
 
 def del_student():
     unstrip_name_str = input("Plaese enter Name the name of the student:")

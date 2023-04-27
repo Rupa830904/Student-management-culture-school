@@ -96,7 +96,11 @@ def add_new_student():
     data_str = input("Enter your data here:")
     student_data = data_str.split(",")  # the values should be a list
     print(student_data[1])
+    pn_str=student_data[1]
+    pn_substr = pn_str[1:8]
+    print(pn_substr)
     '''pn_str = student_data[1]'''
+    
     while True:
         try:
             int(student_data[1])
@@ -119,11 +123,29 @@ def add_new_student():
         except EmailNotValidError as e:
            print(str(e))
            quit()
+    while True:
+        try:
+            datetime.strptime(pn_substr, '%Y%m%d')
+            break
+        except ValueError:
+            print("Personal number must start with 'YYYYMMDD'!")
+            quit()
+    while True:
+        try:
+            check_len(pn_str)
+            break
+        except ValueError:
+            print("Personal number must start with 'YYYYMMDD'!")
+            quit()
     list_student = SHEET.worksheet('student')
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
 
-
+def check_len(str):
+    if len(str) != 12:
+        print("Personal number must be of 12 digits")
+    else:
+        input("\nPress any key to continue...\n")
 def check(email):
     try:
         # validate and get info

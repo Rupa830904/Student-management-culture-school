@@ -10,8 +10,8 @@ import pandas as pd
 import json
 from pandas import json_normalize
 from pandas import read_json
-if os.path.exists("env.py"):
-    import env
+'''if os.path.exists("env.py"):
+    import env'''
 from colorama import just_fix_windows_console
 just_fix_windows_console()
 from colorama import Fore, Back, Style
@@ -69,7 +69,8 @@ def students():
     print("*********")
     print("1. Add new student")
     print("2. Update Student Info")
-    print("3. Remove student")
+    print("3. Find a student")
+    print("4. Remove student")
     print("0. Main Menu")
     print("*********")
 
@@ -82,6 +83,9 @@ def students():
             update_student()
             break
         elif choice == "3":
+            find_student()
+            break
+        elif choice == "4":
             del_student()
             break
         elif choice == "0":
@@ -94,10 +98,15 @@ def add_new_student():
     print(Fore.WHITE + "Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
+    list_student = SHEET.worksheet('student')
     student_data = data_str.split(",")  # the values should be a list
+    student_cell = list_student.find(student_data[0])
+    while student_cell is not None:
+        print(f"Student already exists.Please try again!")
+        quit()
     print(student_data[1])
     pn_str=student_data[1]
-    pn_substr = pn_str[1:8]
+    pn_substr = pn_str[0:8]
     print(pn_substr)
     '''pn_str = student_data[1]'''
     
@@ -135,26 +144,15 @@ def add_new_student():
             check_len(pn_str)
             break
         except ValueError:
-            print("Personal number must start with 'YYYYMMDD'!")
-            quit()
-    list_student = SHEET.worksheet('student')
+            print("Personal number must be of 12 digit!")
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
 
 def check_len(str):
     if len(str) != 12:
         print("Personal number must be of 12 digits")
-    else:
-        input("\nPress any key to continue...\n")
-def check(email):
-    try:
-        # validate and get info
-        v = validate_email(email)
-        # replace with normalized form
-        '''print("True")'''
-    except EmailNotValidError as e:
-        # email is not valid, exception message is human-readable
-        print(str(e))
+        quit()
+
 
 def del_student():
     unstrip_name_str = input("Plaese enter Name the name of the student:")
@@ -203,6 +201,21 @@ def update_student():
             list_student.update_cell(row_num, 4, mail_str)
             print(f"Email registered successfully")
             break
+
+def find_student():
+
+    os.system('clear')
+
+    while True:
+        list_student = SHEET.worksheet('student')   
+        name_str = input("Please type the student name to search:")
+        cell = list_student.find(name_str)
+        row_num = cell.row
+        student_info = list_student.row_values(row_num)
+        df = pd.DataFrame(student_info, columns=['Name', 'PersonalNumber', 'Mobile', 'Email'])
+        print(df)
+        quit()
+
     
 
 def course():

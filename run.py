@@ -16,6 +16,7 @@ from colorama import just_fix_windows_console
 just_fix_windows_console()
 from colorama import Fore, Back, Style
 from email_validator import validate_email, EmailNotValidError
+import match
 
 
 SCOPE = [
@@ -210,11 +211,15 @@ def find_student():
         list_student = SHEET.worksheet('student')   
         name_str = input("Please type the student name to search:")
         cell = list_student.find(name_str)
-        row_num = cell.row
-        student_info = list_student.row_values(row_num)
-        df = pd.DataFrame(student_info, columns=['Name', 'PersonalNumber', 'Mobile', 'Email'])
-        print(df)
-        quit()
+        if cell is None:
+            print(f"{name_str} is not a valid student in culture school")
+            return
+        else:
+            student_info = list_student.get_all_values()
+            df = pd.DataFrame(student_info, columns=['Name', 'PersonalNumber', 'Mobile', 'Email'])
+            row = df.loc[df['Name'] == name_str]
+            print(row)
+            return
 
     
 
@@ -228,6 +233,7 @@ def course():
     print("*********")
     print("1. Register Student")
     print("2. Unregister Student")
+    print("3. Search Registered course")
     print("0. Main Menu")
     print("*********")
 
@@ -238,6 +244,9 @@ def course():
             break
         elif choice == 2:
             unregister_course()
+            break
+        elif choice == 3:
+            search_register_course()
             break
         elif choice == 0:
             main_menu()
@@ -252,24 +261,33 @@ def register_course():
     modern_col = 2  # Column for modern course
     unstrip_course_str = input("Please enter the course name to register(Classical/Modern/Both):")
     course_str = unstrip_course_str.strip() # Strip the user input
+    student_course = SHEET.worksheet('course')
+    classical_cell = student_course.find(query=name_str, in_column=1)
+    modern_cell = student_course.find(query=name_str, in_column=2)
     if course_str == "Classical":
-        student_course = SHEET.worksheet('course')
-        classical_cell = student_course.find(query=name_str, in_column=1)
         if classical_cell is None:
-            last_row = len(student_course.get_all_values())
-            student_course.update_cell(last_row + 1, classical_col, name_str)
-            student_course.update_cell(last_row + 1, modern_col, '')
-            print(f"Student registered successfully")
+            if modern_cell is None:
+                last_row = len(student_course.get_all_values())
+                student_course.update_cell(last_row + 1, classical_col, name_str)
+                student_course.update_cell(last_row + 1, modern_col, '')
+                print(f"Student registered successfully")
+            else:
+                row_num = modern_cell.row
+                student_course.update_cell(row_num, classical_col, name_str)
+                print(f"Student registered successfully")
         else:
             print(f"Student is already registered to {course_str}")
     elif course_str == "Modern":
-        student_course = SHEET.worksheet('course')
-        modern_cell = student_course.find(query=name_str, in_column=2)
         if modern_cell is None:
-            last_row = len(student_course.get_all_values())
-            student_course.update_cell(last_row + 1, classical_col, '')
-            student_course.update_cell(last_row + 1, modern_col, name_str)
-            print(f"Student registered successfully")
+            if classical_cell is None:
+                last_row = len(student_course.get_all_values())
+                student_course.update_cell(last_row + 1, classical_col, '')
+                student_course.update_cell(last_row + 1, modern_col, name_str)
+                print(f"Student registered successfully")
+            else:
+                row_num = classical_cell.row
+                student_course.update_cell(row_num,  modern_col, name_str)
+                print(f"Student registered successfully")
         else:
             print(f"Student is already registered to {course_str}")
     elif course_str == "Both":
@@ -324,6 +342,33 @@ def unregister_course():
     elif course_str == "Both":
         student_course.delete_rows(row_num)
         print(f" {name_str} has been unregistered successfully")
+
+def search_register_course():
+
+    os.system('clear')
+
+    while True:
+        student_course = SHEET.worksheet('course')   
+        name_str = input("Please type the student name to search:")
+        cell = student_course.find(name_str)
+        classical_cell = student_course.find(query=name_str, in_column=1)
+        modern_cell = student_course.find(query=name_str, in_column=2)
+        course_info = student_course.get_all_values()
+        df = pd.DataFrame(course_info, columns=['Classical', 'Modern'])
+        if cell is None:
+            print(f"{name_str} Not a valid student or not registered to a course.")
+        elif modern_cell is None:
+            row = df.loc[df['Classical'] == name_str]
+            print(row)
+        elif classical_cell is None:
+            row = df.loc[df['Modern'] == name_str]
+            print(row)
+        else:
+            row = df.loc[df['Classical'] == name_str]
+            print(row)
+        return
+            
+
 
 def main():
     """

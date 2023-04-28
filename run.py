@@ -3,21 +3,20 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 """Import python modules"""
 import gspread
-from google.oauth2.service_account import Credentials
-import os
-from datetime import datetime, timedelta
 import pandas as pd
 import json
+import os
+from google.oauth2.service_account import Credentials
+from colorama import just_fix_windows_console
+from colorama import Fore, Back, Style
+from email_validator import validate_email, EmailNotValidError
+from datetime import datetime, timedelta
 from pandas import json_normalize
 from pandas import read_json
 '''if os.path.exists("env.py"):
     import env'''
-from colorama import just_fix_windows_console
-just_fix_windows_console()
-from colorama import Fore, Back, Style
-from email_validator import validate_email, EmailNotValidError
-import match
 
+just_fix_windows_console()
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -29,6 +28,7 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('dance_students')
+
 
 def main_menu():
     """
@@ -57,9 +57,10 @@ def main_menu():
             break
         elif choice == 3:
             quit()
-            break
         else:
             print("Invalid choice !!!")
+
+
 def students():
     """
     Display Student manage options.
@@ -95,8 +96,9 @@ def students():
         else:
             print("Invalid choice !!!")
 
+
 def add_new_student():
-    print(Fore.WHITE + "Plaese enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile No.(10 digits) and Email for the student")
+    print(Fore.WHITE + "Enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile, Email")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
     list_student = SHEET.worksheet('student')
@@ -106,11 +108,11 @@ def add_new_student():
         print(f"Student already exists.Please try again!")
         quit()
     print(student_data[1])
-    pn_str=student_data[1]
+    pn_str = student_data[1]
     pn_substr = pn_str[0:8]
     print(pn_substr)
     '''pn_str = student_data[1]'''
-    
+
     while True:
         try:
             int(student_data[1])
@@ -127,12 +129,12 @@ def add_new_student():
             quit()
     while True:
         try:
-        # validate and get info
-           validate_email(student_data[3])
-           break
+            # validate and get info
+            validate_email(student_data[3])
+            break
         except EmailNotValidError as e:
-           print(str(e))
-           quit()
+            print(str(e))
+            quit()
     while True:
         try:
             datetime.strptime(pn_substr, '%Y%m%d')
@@ -149,6 +151,7 @@ def add_new_student():
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
 
+
 def check_len(str):
     if len(str) != 12:
         print("Personal number must be of 12 digits")
@@ -157,7 +160,7 @@ def check_len(str):
 
 def del_student():
     unstrip_name_str = input("Plaese enter Name the name of the student:")
-    name_str = unstrip_name_str.strip() # Strip the user input
+    name_str = unstrip_name_str.strip()  # Strip the user input
     list_student = SHEET.worksheet('student')
     student_course = SHEET.worksheet('course')
     student_cell = list_student.find(name_str)
@@ -186,7 +189,7 @@ def update_student():
         name_str = input("Please choose the student to update info:")
         cell = list_student.find(name_str)
         while cell is None:
-            name_str = input("Please enter the valid student from above table:")
+            name_str = input("Choose the valid student from table:")
             cell = list_student.find(name_str)
         row_num = cell.row
         print("1. Update Mobile No")
@@ -203,12 +206,13 @@ def update_student():
             print(f"Email registered successfully")
             break
 
+
 def find_student():
 
     os.system('clear')
 
     while True:
-        list_student = SHEET.worksheet('student')   
+        list_student = SHEET.worksheet('student')
         name_str = input("Please type the student name to search:")
         cell = list_student.find(name_str)
         if cell is None:
@@ -221,7 +225,6 @@ def find_student():
             print(row)
             return
 
-    
 
 def course():
     """
@@ -238,7 +241,7 @@ def course():
     print("*********")
 
     while True:
-        choice = int (input("Enter Choice: \n"))
+        choice = int(input("Enter Choice: \n"))
         if choice == 1:
             register_course()
             break
@@ -254,13 +257,14 @@ def course():
         else:
             print("Invalid choice !!!")
 
+
 def register_course():
-    unstrip_name_str = input(Fore.GREEN + "Please enter the student name to register:")
-    name_str = unstrip_name_str.strip() # Strip the user input
+    unstrip_name_str = input(Fore.GREEN + "Enter student name to register:")
+    name_str = unstrip_name_str.strip()  # Strip the user input
     classical_col = 1  # Column for classical course
     modern_col = 2  # Column for modern course
-    unstrip_course_str = input("Please enter the course name to register(Classical/Modern/Both):")
-    course_str = unstrip_course_str.strip() # Strip the user input
+    unstrip_course_str = input("Course to register(Classical/Modern/Both):")
+    course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
     classical_cell = student_course.find(query=name_str, in_column=1)
     modern_cell = student_course.find(query=name_str, in_column=2)
@@ -296,15 +300,15 @@ def register_course():
         student_course.update_cell(last_row + 1, classical_col, name_str)
         student_course.update_cell(last_row + 1, modern_col, name_str)
         print(f"Student registered successfully")
-    else :
+    else:
         print(f"Sorry we don't have that course yet")
 
-    
+
 def unregister_course():
-    unstrip_name_str = input(Fore.RED + "Please enter the student name to unregister:")
-    name_str = unstrip_name_str.strip() # Strip the user input
-    unstrip_course_str = input(Fore.RED + "Course to unregister(Classical/Modern/Both):")
-    course_str = unstrip_course_str.strip() # Strip the user input
+    unstrip_name_str = input(Fore.RED + "Enter student name to unregister:")
+    name_str = unstrip_name_str.strip()  # Strip the user input
+    unstrip_course_str = input(Fore.RED + "Unregister(Classical/Modern/Both):")
+    course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
     print(cell)
@@ -343,6 +347,7 @@ def unregister_course():
         student_course.delete_rows(row_num)
         print(f" {name_str} has been unregistered successfully")
 
+
 def search_register_course():
 
     os.system('clear')
@@ -356,7 +361,7 @@ def search_register_course():
         course_info = student_course.get_all_values()
         df = pd.DataFrame(course_info, columns=['Classical', 'Modern'])
         if cell is None:
-            print(f"{name_str} Not a valid student or not registered to a course.")
+            print(f"{name_str} Invalid student or not registered to a course.")
         elif modern_cell is None:
             row = df.loc[df['Classical'] == name_str]
             print(row)
@@ -367,7 +372,6 @@ def search_register_course():
             row = df.loc[df['Classical'] == name_str]
             print(row)
         return
-            
 
 
 def main():

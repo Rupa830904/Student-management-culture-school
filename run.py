@@ -6,6 +6,7 @@ import gspread
 import pandas as pd
 import json
 import os
+import time
 from google.oauth2.service_account import Credentials
 from colorama import just_fix_windows_console
 from colorama import Fore, Back, Style
@@ -150,6 +151,7 @@ def add_new_student():
             print("Personal number must be of 12 digit!")
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
+    time.sleep(4)
     students()
 
 

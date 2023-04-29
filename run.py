@@ -150,7 +150,7 @@ def add_new_student():
             print("Personal number must be of 12 digit!")
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
-    return
+    students()
 
 
 def check_len(str):

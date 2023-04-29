@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 from colorama import just_fix_windows_console
 from colorama import Fore, Back, Style
 from email_validator import validate_email, EmailNotValidError
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pandas import json_normalize
 from pandas import read_json
 '''if os.path.exists("env.py"):
@@ -150,6 +150,7 @@ def add_new_student():
             print("Personal number must be of 12 digit!")
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
+    return
 
 
 def check_len(str):
@@ -226,6 +227,12 @@ def find_student():
             return
 
 
+def json_serializer(obj):
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f'Type {type(obj)} is not serializable')
+
+
 def course():
     """
     Display course registration options.
@@ -263,6 +270,10 @@ def register_course():
     name_str = unstrip_name_str.strip()  # Strip the user input
     classical_col = 1  # Column for classical course
     modern_col = 2  # Column for modern course
+    '''date_col = 3'''
+    '''today = datetime.now()'''
+    '''date_str = json.dumps({today}, default=json_serializer)'''
+    '''date_str = type(date_json_str)'''
     unstrip_course_str = input("Course to register(Classical/Modern/Both):")
     course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
@@ -274,10 +285,12 @@ def register_course():
                 last_row = len(student_course.get_all_values())
                 student_course.update_cell(last_row + 1, classical_col, name_str)
                 student_course.update_cell(last_row + 1, modern_col, '')
+                '''student_course.update_cell(last_row + 1, date_col, today)'''
                 print(f"Student registered successfully")
             else:
                 row_num = modern_cell.row
                 student_course.update_cell(row_num, classical_col, name_str)
+                '''student_course.update_cell(row_num, date_col, today)'''
                 print(f"Student registered successfully")
         else:
             print(f"Student is already registered to {course_str}")
@@ -287,11 +300,13 @@ def register_course():
                 last_row = len(student_course.get_all_values())
                 student_course.update_cell(last_row + 1, classical_col, '')
                 student_course.update_cell(last_row + 1, modern_col, name_str)
+                '''student_course.update_cell(last_row + 1, date_col, today)'''
                 print(f"Student registered successfully")
             else:
                 row_num = classical_cell.row
                 student_course.update_cell(row_num,  modern_col, name_str)
-                print(f"Student registered successfully")
+                student_course.update_cell(row_num, date_col, today)
+                '''print(f"Student registered successfully")'''
         else:
             print(f"Student is already registered to {course_str}")
     elif course_str == "Both":
@@ -299,9 +314,11 @@ def register_course():
         last_row = len(student_course.get_all_values())
         student_course.update_cell(last_row + 1, classical_col, name_str)
         student_course.update_cell(last_row + 1, modern_col, name_str)
+        student_course.update_cell(last_row + 1, date_col, today.strftime('%Y-%m-%d %H:%M:%S.%f'))
         print(f"Student registered successfully")
     else:
         print(f"Sorry we don't have that course yet")
+    return
 
 
 def unregister_course():
@@ -353,7 +370,7 @@ def search_register_course():
     os.system('clear')
 
     while True:
-        student_course = SHEET.worksheet('course')   
+        student_course = SHEET.worksheet('course')
         name_str = input("Please type the student name to search:")
         cell = student_course.find(name_str)
         classical_cell = student_course.find(query=name_str, in_column=1)

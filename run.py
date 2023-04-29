@@ -162,7 +162,8 @@ def add_new_student():
 def check_len(str):
     if len(str) != 12:
         print("Personal number must be of 12 digits")
-        quit()
+        input("\nPress Enter to continue...\n")
+    return
 
 
 def del_student():
@@ -243,12 +244,6 @@ def find_student():
             print(row)
             input("\nPress Enter to continue...\n")
             students()
-
-
-def json_serializer(obj):
-    if isinstance(obj, (datetime, date)):
-        return obj.isoformat()
-    raise TypeError(f'Type {type(obj)} is not serializable')
 
 
 def course():
@@ -344,7 +339,7 @@ def register_course():
         last_row = len(student_course.get_all_values())
         student_course.update_cell(last_row + 1, classical_col, name_str)
         student_course.update_cell(last_row + 1, modern_col, name_str)
-        student_course.update_cell(last_row + 1, date_col, today.strftime('%Y-%m-%d %H:%M:%S.%f'))
+        '''student_course.update_cell(last_row + 1, date_col, today.strftime('%Y-%m-%d %H:%M:%S.%f'))'''
         print(f"Student registered successfully")
         input("\nPress Enter to continue...\n")
         course()

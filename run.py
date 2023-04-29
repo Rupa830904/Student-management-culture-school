@@ -125,7 +125,8 @@ def add_new_student():
             break
         except ValueError:
             print("Mobile number can only be digits !")
-            quit()
+            input("\nPress any key to continue...\n")
+            students()
     while True:
         try:
             # validate and get info
@@ -133,20 +134,24 @@ def add_new_student():
             break
         except EmailNotValidError as e:
             print(str(e))
-            quit()
+            input("\nPress any key to continue...\n")
+            students()
     while True:
         try:
             datetime.strptime(pn_substr, '%Y%m%d')
             break
         except ValueError:
             print("Personal number must start with 'YYYYMMDD'!")
-            quit()
+            input("\nPress any key to continue...\n")
+            students()
     while True:
         try:
             check_len(pn_str)
             break
         except ValueError:
             print("Personal number must be of 12 digit!")
+            input("\nPress any key to continue...\n")
+            students()
     list_student.append_row(student_data, table_range="A1:D1")
     print(f"Student info updated successfully")
     input("\nPress any key to continue...\n")
@@ -174,8 +179,12 @@ def del_student():
     if course_cell is None:
         list_student.delete_rows(row_num)
         print(f"Student {name_str} has been removed.")
+        input("\nPress any key to continue...\n")
+        students()
     else:
         print(f"Student {name_str} must be unregistred from course first.")
+        input("\nPress any key to continue...\n")
+        students()
     input("\nPress any key to continue...\n")
     students()
 
@@ -202,12 +211,14 @@ def update_student():
             mobile_str = input("Please enter new mobile:")
             list_student.update_cell(row_num, 3, mobile_str)
             print(f"Mobile Number registered successfully")
-            break
+            input("\nPress any key to continue...\n")
+            students()
         elif choice == "2":
             mail_str = input("Please enter new email:")
             list_student.update_cell(row_num, 4, mail_str)
             print(f"Email registered successfully")
-            break
+            input("\nPress any key to continue...\n")
+            students()
     input("\nPress any key to continue...\n")
     students()
 
@@ -222,13 +233,15 @@ def find_student():
         cell = list_student.find(name_str)
         if cell is None:
             print(f"{name_str} is not a valid student in culture school")
-            return
+            input("\nPress any key to continue...\n")
+            students()
         else:
             student_info = list_student.get_all_values()
             df = pd.DataFrame(student_info, columns=['Name', 'PersonalNumber', 'Mobile', 'Email'])
             row = df.loc[df['Name'] == name_str]
             print(row)
-            return
+            input("\nPress any key to continue...\n")
+            students()
 
 
 def json_serializer(obj):

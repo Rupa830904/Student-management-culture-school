@@ -41,7 +41,6 @@ def main_menu():
     print("********")
     print("1. Students Menu")
     print("2. Course Menu")
-    print("3. Exit")
     print("*********")
     while True:
         try:
@@ -56,8 +55,6 @@ def main_menu():
         elif choice == 2:
             course()
             break
-        elif choice == 3:
-            quit()
         else:
             print("Invalid choice !!!")
 
@@ -120,7 +117,8 @@ def add_new_student():
             break
         except ValueError:
             print("Personal number can only be digits !")
-            quit()
+            input("\nPress any key to continue...\n")
+            students()
     while True:
         try:
             int(student_data[2])

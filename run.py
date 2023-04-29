@@ -178,6 +178,8 @@ def del_student():
         print(f"Student {name_str} has been removed.")
     else:
         print(f"Student {name_str} must be unregistred from course first.")
+    input("\nPress any key to continue...\n")
+    students()
 
 
 def update_student():
@@ -208,6 +210,8 @@ def update_student():
             list_student.update_cell(row_num, 4, mail_str)
             print(f"Email registered successfully")
             break
+    input("\nPress any key to continue...\n")
+    students()
 
 
 def find_student():

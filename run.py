@@ -145,25 +145,15 @@ def add_new_student():
             print("Personal number must start with 'YYYYMMDD'!")
             input("\nPress Enter to continue...\n")
             students()
-    while True:
-        try:
-            check_len(pn_str)
-            break
-        except ValueError:
-            print("Personal number must be of 12 digit!")
-            input("\nPress Enter to continue...\n")
-            students()
-    list_student.append_row(student_data, table_range="A1:D1")
-    print(f"Student info updated successfully")
-    input("\nPress Enter to continue...\n")
-    students()
-
-
-def check_len(str):
-    if len(str) != 12:
+    if len(pn_str) == 12:
+        list_student.append_row(student_data, table_range="A1:D1")
+        print(f"Student info updated successfully")
+        input("\nPress Enter to continue...\n")
+        students()
+    else:
         print("Personal number must be of 12 digits")
         input("\nPress Enter to continue...\n")
-    return
+        students()
 
 
 def del_student():

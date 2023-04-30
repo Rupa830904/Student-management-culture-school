@@ -190,7 +190,8 @@ def update_student():
         data = list_student.get_all_values()
         df = pd.DataFrame(data, columns=['', '', '', ''])
         print(df)
-        name_str = input("Please choose the student to update info:")
+        unstrip_name_str = input("Please choose the student to update info:")
+        name_str = unstrip_name_str.strip() 
         cell = list_student.find(name_str)
         while cell is None:
             name_str = input("Choose the valid student from table:")
@@ -221,7 +222,8 @@ def find_student():
 
     while True:
         list_student = SHEET.worksheet('student')
-        name_str = input("Please type the student name to search:")
+        unstrip_name_str = input("Please type the student name to search:")
+        name_str = unstrip_name_str.strip() 
         cell = list_student.find(name_str)
         if cell is None:
             print(f"{name_str} is not a valid student in culture school")
@@ -273,6 +275,12 @@ def register_course():
     name_str = unstrip_name_str.strip()  # Strip the user input
     classical_col = 1  # Column for classical course
     modern_col = 2  # Column for modern course
+    list_student = SHEET.worksheet('student')
+    cell = list_student.find(name_str)
+    while cell is None:
+        print(f"{name_str} is not a valid student in culture school")
+        input("\nPress Enter to continue...\n")
+        course()
     '''date_col = 3'''
     '''today = datetime.now()'''
     '''date_str = json.dumps({today}, default=json_serializer)'''
@@ -404,7 +412,8 @@ def search_register_course():
 
     while True:
         student_course = SHEET.worksheet('course')
-        name_str = input("Please type the student name to search:")
+        unstrip_name_str = input("Please type the student name to search:")
+        name_str = unstrip_name_str.strip() 
         cell = student_course.find(name_str)
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)

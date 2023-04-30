@@ -32,20 +32,24 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 Happy coding!
 
 
-Introduction
+## Introduction
+
 This project was created to manage the students of dance lessions in Älmhult Culture School.Schools can easily use the program to manage the information and registration of their students. It  allows school administrators to keep track of their students ánd courses information.
 
-Site Goals
+## Site Goals
 Provide a simple application to allow the site owner to keep track of students and course registration.
 Target Audience
 Small school administrators,teachers who want to keep track of students info and course details.
-User Stories
+
+## User Stories
+
 As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
 As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
 As a User, I would like to be able to manage course registration for students so that I can add, delete and find courses with ease.
 As a User, I would like to be able to view student registration status so I can decide add/remove them accordingly.
 As a User, I would like to be able to return to the main menu without having to restart the application.
-Features Planned
+## Features Planned
+
 Simple, easy to use application with clear navigation.
 Simple database storage for:
 Create, read, update and delete functionality for students.
@@ -54,7 +58,8 @@ Ability to view student info and course registration.
 Return to main menu option through sub menus.
 Structure
 Features
-USER STORY
+
+## USER STORY
 
 As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
 
@@ -77,6 +82,8 @@ IMPLEMENTATION
 
 Students Menu
 When the user selects Students from the main menu, the following menu options will appear:
+
+main_menu.JPG
 
 This feature will allow the user to easily view, add, edit and delete students.
 

@@ -7,38 +7,40 @@ Target Audience
 Small school administrators,teachers who want to keep track of students info and course details.
 
 ## User Stories
-As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
-As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
-As a User, I would like to be able to manage course registration for students so that I can add, delete and find courses with ease.
-As a User, I would like to be able to view student registration status so I can decide add/remove them accordingly.
-As a User, I would like to be able to return to the main menu without having to restart the application.
+ - As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
+ - As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
+ - As a User, I would like to be able to manage course registration for students so that I can add, delete and find courses with ease.
+ - As a User, I would like to be able to view student registration status so I can decide add/remove them accordingly.
+ - As a User, I would like to be able to return to the main menu without having to restart the application.
 ## Features Planned
-Simple, easy to use application with clear navigation.
-Simple database storage for:
-Create, read, update and delete functionality for students.
-Create, read and delete functionality for course registration.
-Ability to view student info and course registration.
-Return to main menu option through sub menus.
-Structure
-Features
+ - Simple, easy to use application with clear navigation.
+ - Simple database storage for:
+ - Create, read, update and delete functionality for students.
+ - Create, read and delete functionality for course registration.
+ - Ability to view student info and course registration.
+ - Return to main menu option through sub menus.
+ - Structure
+ - Features
 
-## USER STORY
+# USER STORY
 
 As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
 
 IMPLEMENTATION
 
-Main Menu
+# Main Menu
+
 When the application starts, a main menu will appear with the following options:
-1 - Students Menu
-2 - Course Menu
+ - 1 - Students Menu
+ - 2 - Course Menu
+
 The user must input a correct number corresponding to each menu or they will be alerted of an inccorect choice and the menu will be presented again.
 This feature will allow the user to easily access the sub menus to each category in order to perform the operations needed.
 Main Menu
 
 ![Main Menu](docs/screenshots/main_menu.JPG)
 
-## USER STORY
+# USER STORY
 
 As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
 

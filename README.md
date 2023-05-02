@@ -61,7 +61,7 @@ As a User, I would like to be able to manage my students so that I can easily ke
 
 IMPLEMENTATION
 
-Students Menu:
+### Students Menu:
 
 When the user selects option 1 Students Menu from the main menu, the following menu options will appear:
 
@@ -71,19 +71,19 @@ The user must input a correct number corresponding to each menu or they will be 
 This feature will allow the user to easily access the sub menus to each category in order to perform the operations needed.
 Main Menu
 
-This feature will allow the user to easily add student.
+### This feature will allow the user to easily add student.
 
 ![Add Student](docs/screenshots/Add_student.JPG)
 
-This feature will allow the user to easily update student info (Email/Mobile No.):
+### This feature will allow the user to easily update student info (Email/Mobile No.):
 
 ![Update Student Info](docs/screenshots/Update_student_info.JPG)
 
-This feature will allow the user to find student info based on student name input.
+### This feature will allow the user to find student info based on student name input.
 
 ![Find Student Info](docs/screenshots/Find_student.JPG)
 
-This feature will allow the user to remove a student only if the student is not registered in a course.
+### This feature will allow the user to remove a student only if the student is not registered in a course.
 
 ![Remove Student Info]
 
@@ -136,7 +136,10 @@ Students Update Menu
 
 Course Menu
 
-Database Design
+# Google Sheet Design
+
+- A google spreadsheet is created for this project https://docs.google.com/spreadsheets/d/1TndCTKtANLMzGCNryyoSZhjWc2OnZcVNVcEjNAU9mUU/edit#gid=0
+- This spreadsheet has two worksheetes named 'student' and 'course'
 
 
 
@@ -187,9 +190,6 @@ Go to Heroku and click "New" to create a new app.
 Choose an app name and region region, click "Create app".
 Go to "Settings" and navigate to Config Vars. Add the following config variables:
 PORT : 8000
-MONGO_URI : (Mongo URI connection string from MongoDB setup)
-Navigate to Buildpacks and add buildpacks for Python and NodeJS (in that order).
-Navigate to "Deploy". Set the deployment method to Github and enter repository name and connect.
 Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
 The app will now be deployed to heroku
 TODO - Live Link

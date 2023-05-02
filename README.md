@@ -8,8 +8,9 @@ Small school administrators,teachers who want to keep track of students info and
 
 ## User Stories
  - As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
+ - As a User. I would like to be able to list and find my students and their registered course so I can manage their registrations.
  - As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
- - As a User, I would like to be able to manage course registration for students so that I can add, delete and find courses with ease.
+ - As a User, I would like to be able to manage course registration for students so that I can register/unregister courses with ease.
  - As a User, I would like to be able to view student registration status so I can decide add/remove them accordingly.
  - As a User, I would like to be able to return to the main menu without having to restart the application.
 ## Features Planned
@@ -22,17 +23,18 @@ Small school administrators,teachers who want to keep track of students info and
  - Structure
  - Features
 
-# USER STORY
+## USER STORY
 
 As a User, I would like to be able to easily find the various menus so that I can view information or add / edit records.
 
 IMPLEMENTATION
 
-# Main Menu
+## Main Menu
 
 When the application starts, a main menu will appear with the following options:
  - 1 - Students Menu
  - 2 - Course Menu
+ - 3 - List All students
 
 The user must input a correct number corresponding to each menu or they will be alerted of an inccorect choice and the menu will be presented again.
 This feature will allow the user to easily access the sub menus to each category in order to perform the operations needed.
@@ -40,38 +42,76 @@ Main Menu
 
 ![Main Menu](docs/screenshots/main_menu.JPG)
 
-# USER STORY
+## USER STORY
+
+As a User. I would like to be able to list and find my students and their registered course so I can manage their registrations.
+
+IMPLEMENTATION
+
+When the user choose option 3 in Menu. It displays all list of students. Then the user gets option either search course or go back to main menu.
+
+![List Students](docs/screenshots/list_all_student.JPG)
+
+![Course Status](docs/screenshots/search_student_course.JPG)
+
+## USER STORY
 
 As a User, I would like to be able to manage my students so that I can easily keep track of their contact info and edit / remove as neccessary.
 
 
 IMPLEMENTATION
 
-Students Menu
-When the user selects Students from the main menu, the following menu options will appear:
+Students Menu:
 
-This feature will allow the user to easily view, add, edit and delete students.
+When the user selects option 1 Students Menu from the main menu, the following menu options will appear:
 
-![Main Menu](docs/screenshots/student_menu.JPG)
+![Student Menu](docs/screenshots/student_menu.JPG)
 
-.
-Update Menu
+The user must input a correct number corresponding to each menu or they will be alerted of an inccorect choice and the menu will be presented again.
+This feature will allow the user to easily access the sub menus to each category in order to perform the operations needed.
+Main Menu
+
+This feature will allow the user to easily add student.
+
+![Add Student](docs/screenshots/Add_student.JPG)
+
+This feature will allow the user to easily update student info (Email/Mobile No.):
+
+![Update Student Info](docs/screenshots/Update_student_info.JPG)
+
+This feature will allow the user to find student info based on student name input.
+
+![Find Student Info](docs/screenshots/Find_student.JPG)
+
+This feature will allow the user to remove a student only if the student is not registered in a course.
+
+![Remove Student Info]
 
 
 
-USER STORY
+## USER STORY
 
-As a User, I would like to be able to manage course bookings so that I can add, delete and find customer bookings with ease.
+As a User, I would like to be able to manage course registration for students so that I can register/unregister courses with ease.
 
 IMPLEMENTATION
 
-Booking Menu
-When the user selects Bookings from the main menu, the following menu options will appear:
+Course Menu:
 
-This feature will allow the user to easily view, add and search for a course.
+When the user selects option 2, Course Menu from the main menu, the following menu options will appear:
+
+![Course Menu](docs/screenshots/Course_menu.JPG)
+
+This feature will allow the user to register the student to classical/Modern or Both the courses.
+
+![Register Course](docs/screenshots/Register_course.JPG)
+
+This feature will allow the user to unregister the student to classical/Modern or Both the courses.
+
+![UnRegister Course](docs/screenshots/Register_course.JPG)
 
 
-USER STORY
+
+## USER STORY
 
 As a User, I would like to be able to return to the main menu without having to restart the application.
 

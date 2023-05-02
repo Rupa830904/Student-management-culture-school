@@ -183,7 +183,6 @@ def del_student():
     student_course = SHEET.worksheet('course')
     student_cell = list_student.find(name_str)
     course_cell = student_course.find(name_str)
-    print(course_cell)
     while student_cell is None:
         unstrip_name_str = input("Please enter the valid student name to remove:")
         toconvert_name_str = unstrip_name_str.strip()  # Strip the user input

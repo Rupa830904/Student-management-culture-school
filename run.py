@@ -118,7 +118,6 @@ def add_new_student():
         print(f"Student already exists.Please try again!")
         input("\nPress Enter to continue...\n")
         students()
-    print(student_data[1])
     pn_str = student_data[1]
     pn_substr = pn_str[0:8]
     mobile_str = student_data[2]

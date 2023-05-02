@@ -101,13 +101,17 @@ def add_new_student():
     data_str = input("Enter your data here:")
     list_student = SHEET.worksheet('student')
     student_data = data_str.split(",")  # the values should be a list
-    student_cell = list_student.find(student_data[0])
+    if len(student_data) < 4:
+        print(f"Not enough data.Please try again!")
+        input("\nPress Enter to continue...\n")
+        students()
+    name_str = student_data[0].lower()
+    student_cell = list_student.find(name_str)
     while student_cell is not None:
         print(f"Student already exists.Please try again!")
         input("\nPress Enter to continue...\n")
         students()
     print(student_data[1])
-    name_str = student_data[0].lower()
     pn_str = student_data[1]
     pn_substr = pn_str[0:8]
     mobile_str = student_data[2]

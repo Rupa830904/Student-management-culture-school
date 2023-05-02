@@ -11,11 +11,9 @@ from google.oauth2.service_account import Credentials
 from colorama import just_fix_windows_console
 from colorama import Fore, Back, Style
 from email_validator import validate_email, EmailNotValidError
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from pandas import json_normalize
 from pandas import read_json
-'''if os.path.exists("env.py"):
-    import env'''
 
 just_fix_windows_console()
 
@@ -41,6 +39,7 @@ def main_menu():
     print("********")
     print("1. Students Menu")
     print("2. Course Menu")
+    print("3. List all students")
     print("*********")
     while True:
         try:
@@ -54,6 +53,9 @@ def main_menu():
             break
         elif choice == 2:
             course()
+            break
+        elif choice == 3:
+            list_all_student()
             break
         else:
             print("Invalid choice !!!")
@@ -96,6 +98,11 @@ def students():
 
 
 def add_new_student():
+    """
+    Prompts user to provide info to add for
+    a new student.Validate user inputs andd to sudent info sheet
+
+    """
     print(Fore.WHITE + "Enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile, Email")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
@@ -116,8 +123,6 @@ def add_new_student():
     pn_substr = pn_str[0:8]
     mobile_str = student_data[2]
     mail_str = student_data[3]
-    print(pn_substr)
-    '''pn_str = student_data[1]'''
 
     while True:
         try:
@@ -165,7 +170,14 @@ def add_new_student():
 
 
 def del_student():
-    unstrip_name_str = input("Plaese enter Name the name of the student:")
+
+    """
+    Prompts user to provide student name to delete. 
+    Validate if the student has registered course
+    Removes the student info if it is a valid student.
+    
+    """
+    unstrip_name_str = input("Plaese enter name of the student:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Covert to lower case
     list_student = SHEET.worksheet('student')
@@ -194,32 +206,52 @@ def del_student():
 
 def update_student():
 
+    """
+    Prompts user to provide student name to update info. 
+    Updates students's mobile no. or email as per user choice.
+    
+    """
+
     os.system('clear')
 
     while True:
         list_student = SHEET.worksheet('student')
-        data = list_student.get_all_values()
-        df = pd.DataFrame(data, columns=['', '', '', ''])
-        print(df)
         unstrip_name_str = input("Please choose the student to update info:") 
         toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
         name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         while cell is None:
-            name_str = input("Choose the valid student from table:")
-            cell = list_student.find(name_str)
+            print(f"{ name_str} not a valid student.You will be redirected to main menu")
+            input("\nPress Enter to continue...\n")
+            main_menu()
         row_num = cell.row
         print("1. Update Mobile No")
         print("2. Update Email")
         choice = input("Enter Choice: \n")
         if choice == "1":
             mobile_str = input("Please enter new mobile:")
+            while True:
+                try:
+                    int(mobile_str)
+                    break
+                except ValueError:
+                    print("Mobile number can only be digits !")
+                    input("\nPress Enter to continue...\n")
+                    students()
             list_student.update_cell(row_num, 3, mobile_str)
             print(f"Mobile Number registered successfully")
             input("\nPress Enter to continue...\n")
             students()
         elif choice == "2":
             mail_str = input("Please enter new email:")
+            while True:
+                try:
+                    validate_email(mail_str)
+                    break
+                except EmailNotValidError as e:
+                    print(str(e))
+                    input("\nPress Enter to continue...\n")
+                    students()
             list_student.update_cell(row_num, 4, mail_str)
             print(f"Email registered successfully")
             input("\nPress Enter to continue...\n")
@@ -227,8 +259,41 @@ def update_student():
     input("\nPress Enter to continue...\n")
     students()
 
+def list_all_student():
+
+    """
+    Display all user info table. 
+    Gives user a choice to view the regsitered course or go back Main Menu.
+    If the registered course is chosen display the options to search course for a student.
+    
+    """
+
+    os.system('clear')
+
+    while True:
+        list_student = SHEET.worksheet('student')
+        data = list_student.get_all_values()
+        df = pd.DataFrame(data, columns=['', '', '', ''])
+        print(df)
+        print("Please choose action from below")
+        print("1. Search course for student")
+        print("2. Main Menu")
+        choice = input("Enter Choice: \n")
+        if choice == "1":
+            search_register_course()
+        elif choice == "2":
+            main_menu()
+    input("\nPress Enter to continue...\n")
+    students()
+
 
 def find_student():
+
+    """
+    Prompts user to provide student name to find info. 
+    Provide all user info if it is a valid student.
+    
+    """
 
     os.system('clear')
 
@@ -284,6 +349,13 @@ def course():
 
 
 def register_course():
+
+    """
+    Prompts user to provide student name and the course name to register. 
+    Updates the course registration field as per the user input.
+    
+    """
+
     unstrip_name_str = input(Fore.GREEN + "Enter student name to register:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
@@ -295,10 +367,6 @@ def register_course():
         print(f"{name_str} is not a valid student in culture school")
         input("\nPress Enter to continue...\n")
         course()
-    '''date_col = 3'''
-    '''today = datetime.now()'''
-    '''date_str = json.dumps({today}, default=json_serializer)'''
-    '''date_str = type(date_json_str)'''
     unstrip_course_str = input("Course to register(Classical/Modern/Both):")
     course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
@@ -351,7 +419,6 @@ def register_course():
         last_row = len(student_course.get_all_values())
         student_course.update_cell(last_row + 1, classical_col, name_str)
         student_course.update_cell(last_row + 1, modern_col, name_str)
-        '''student_course.update_cell(last_row + 1, date_col, today.strftime('%Y-%m-%d %H:%M:%S.%f'))'''
         print(f"Student registered successfully")
         input("\nPress Enter to continue...\n")
         course()
@@ -363,6 +430,14 @@ def register_course():
 
 
 def unregister_course():
+
+    """
+    Prompts user to provide student name and the course name to unregister. 
+    Updates the course registration field to unregister as per the user input.
+    
+    """
+
+
     unstrip_name_str = input(Fore.RED + "Enter student name to unregister:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
@@ -370,7 +445,6 @@ def unregister_course():
     course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
-    print(cell)
     while cell is None:
         print(f"Please enter a valid student name")
         name_str = input("Please enter the valid student name to unregister:")
@@ -422,6 +496,13 @@ def unregister_course():
 
 
 def search_register_course():
+
+    """
+    Prompts user to provide student name to search for registered course. 
+    Displays the registered. course for a student
+    
+    """
+
 
     os.system('clear')
 

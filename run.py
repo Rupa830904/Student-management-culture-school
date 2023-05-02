@@ -170,7 +170,9 @@ def del_student():
     course_cell = student_course.find(name_str)
     print(course_cell)
     while student_cell is None:
-        name_str = input("Please enter the valid student name to remove:")
+        unstrip_name_str = input("Please enter the valid student name to remove:")
+        toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+        name_str = toconvert_name_str.lower()  # Covert to lower case
         student_cell = list_student.find(name_str)
     row_num = student_cell.row
     if course_cell is None:

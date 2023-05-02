@@ -107,14 +107,17 @@ def add_new_student():
         input("\nPress Enter to continue...\n")
         students()
     print(student_data[1])
+    name_str = student_data[0].lower()
     pn_str = student_data[1]
     pn_substr = pn_str[0:8]
+    mobile_str = student_data[2]
+    mail_str = student_data[3]
     print(pn_substr)
     '''pn_str = student_data[1]'''
 
     while True:
         try:
-            int(student_data[1])
+            int(pn_str)
             break
         except ValueError:
             print("Personal number can only be digits !")
@@ -122,7 +125,7 @@ def add_new_student():
             students()
     while True:
         try:
-            int(student_data[2])
+            int(mobile_str)
             break
         except ValueError:
             print("Mobile number can only be digits !")
@@ -131,7 +134,7 @@ def add_new_student():
     while True:
         try:
             # validate and get info
-            validate_email(student_data[3])
+            validate_email(mail_str)
             break
         except EmailNotValidError as e:
             print(str(e))
@@ -146,7 +149,8 @@ def add_new_student():
             input("\nPress Enter to continue...\n")
             students()
     if len(pn_str) == 12:
-        list_student.append_row(student_data, table_range="A1:D1")
+        student_validated = [name_str, pn_str, mobile_str, mail_str]
+        list_student.append_row(student_validated, table_range="A1:D1")
         print(f"Student info updated successfully")
         input("\nPress Enter to continue...\n")
         students()
@@ -158,7 +162,8 @@ def add_new_student():
 
 def del_student():
     unstrip_name_str = input("Plaese enter Name the name of the student:")
-    name_str = unstrip_name_str.strip()  # Strip the user input
+    toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+    name_str = toconvert_name_str.lower()  # Covert to lower case
     list_student = SHEET.worksheet('student')
     student_course = SHEET.worksheet('course')
     student_cell = list_student.find(name_str)
@@ -190,8 +195,9 @@ def update_student():
         data = list_student.get_all_values()
         df = pd.DataFrame(data, columns=['', '', '', ''])
         print(df)
-        unstrip_name_str = input("Please choose the student to update info:")
-        name_str = unstrip_name_str.strip() 
+        unstrip_name_str = input("Please choose the student to update info:") 
+        toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+        name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         while cell is None:
             name_str = input("Choose the valid student from table:")
@@ -223,7 +229,8 @@ def find_student():
     while True:
         list_student = SHEET.worksheet('student')
         unstrip_name_str = input("Please type the student name to search:")
-        name_str = unstrip_name_str.strip() 
+        toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+        name_str = toconvert_name_str.lower()  # Covert to lower case 
         cell = list_student.find(name_str)
         if cell is None:
             print(f"{name_str} is not a valid student in culture school")
@@ -272,7 +279,8 @@ def course():
 
 def register_course():
     unstrip_name_str = input(Fore.GREEN + "Enter student name to register:")
-    name_str = unstrip_name_str.strip()  # Strip the user input
+    toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+    name_str = toconvert_name_str.lower()  # Convert to lower case
     classical_col = 1  # Column for classical course
     modern_col = 2  # Column for modern course
     list_student = SHEET.worksheet('student')
@@ -350,7 +358,8 @@ def register_course():
 
 def unregister_course():
     unstrip_name_str = input(Fore.RED + "Enter student name to unregister:")
-    name_str = unstrip_name_str.strip()  # Strip the user input
+    toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+    name_str = toconvert_name_str.lower()  # Convert to lower case
     unstrip_course_str = input(Fore.RED + "Unregister(Classical/Modern/Both):")
     course_str = unstrip_course_str.strip()  # Strip the user input
     student_course = SHEET.worksheet('course')
@@ -413,7 +422,8 @@ def search_register_course():
     while True:
         student_course = SHEET.worksheet('course')
         unstrip_name_str = input("Please type the student name to search:")
-        name_str = unstrip_name_str.strip() 
+        toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
+        name_str = toconvert_name_str.lower()  # Convert to lower case
         cell = student_course.find(name_str)
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)

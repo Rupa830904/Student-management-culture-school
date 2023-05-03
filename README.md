@@ -126,14 +126,19 @@ Error Handling
 Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Value errors. For all types of data input errors user will be alerted with a message and given a option to go back to the corresponding menu.
 
 
-Logical Flow
-Main Menu
+## Logical Flow
 
-Students Menu
+### Main Menu
 
-Students Update Menu
+![Logical Flow 1](docs/flows/Flowchart1.JPG)
 
-Course Menu
+### Students Menu
+
+![Logical Flow 1](docs/flows/Flowchart2.JPG)
+
+### Course Menu
+
+![Logical Flow 1](docs/flows/Flowchart3.JPG)
 
 # Google Sheet Design
 
@@ -151,16 +156,18 @@ Technologies
 - Python - Python was the main language used to build the application.
 - Python packages used:
    - Gspread - This was used as data storage in order to store the bike and booking information.
-   - 
+   - pandas - This was used to convert the worksheet data into a dataframe and then work on it.
 
-Testing
-Functional Testing
-Below are the test execution of positive functional tests:
+# Testing
+## Functional Testing
+### Below are the test execution of positive functional tests:
 
 
-Negative input validation testing was performed on all menu options to ensure correct input. All options behaved as expected, alerting the user of invalid inoput and then asking for input again.
+### Below are the test execution of negative functional tests:
 
-Pep8 Validation
+Negative input validation testing was performed on all menu options to ensure correct input. All options behaved as expected, alerting the user of invalid input and then asking for input again.
+
+## Pep8 Validation
 All python code was ran through pycodestyle validation and any warnings or errors were fixed. Code then validated successfully.
 
 ![PEP8 validation](docs/screenshots/PEP8_pycodestyle.JPG)
@@ -182,11 +189,10 @@ The following git commands were used throughout development to push code to the 
 
 git add <file> - This command was used to add the file(s) to the staging area before they are committed.
 
-git commit -m â€œcommit messageâ€ - This command was used to commit changes to the local repository queue ready for the final step.
+git commit -m "commit message" - This command was used to commit changes to the local repository queue ready for the final step.
 
 git push - This command was used to push all committed code to the remote repository on github.
 
-Gspread Setup
 
 Heroku Deployment
 The below steps were followed to deploy this project to Heroku:
@@ -197,7 +203,7 @@ Go to "Settings" and navigate to Config Vars. Add the following config variables
 PORT : 8000
 Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
 The app will now be deployed to heroku
-TODO - Live Link
+![Live Link](https://student-management.herokuapp.com/)
 
 Clone Locally
 Open IDE of choice and type the following into the terminal:

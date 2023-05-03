@@ -197,15 +197,15 @@ git push - This command was used to push all committed code to the remote reposi
 Heroku Deployment
 The below steps were followed to deploy this project to Heroku:
 
-Go to Heroku and click "New" to create a new app.
-Choose an app name and region region, click "Create app".
-Go to "Settings" and navigate to Config Vars. Add the following config variables:
-PORT : 8000
-Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
-The app will now be deployed to heroku
-[Student-Management](https://student-management.herokuapp.com/)
+- Go to Heroku and click "New" to create a new app.
+- Choose an app name and region region, click "Create app".
+- Go to "Settings" and navigate to Config Vars. Add the following config variables: Add CREDS Variable.
+- Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
+- The app will now be deployed to heroku
 
-Clone Locally
+- [Student-Management-Culture-School](https://student-management.herokuapp.com/)
+
+### Clone Locally
 Open IDE of choice and type the following into the terminal:
 
 Project will now be cloned locally.
@@ -214,12 +214,6 @@ Note: If you want to use the application, follow the steps in the MongoDB Setup 
 
 Credits
 Code
-Youtube tutorial - 
 
-Check date range - This tutorial was used to check if a date was within a date range.
-
-Create Date Range - This tutorial was used to create a date range.
-
-Sorting dictionary values - This stackoverflow post was used in order to sort my dictionary values by date.
 
 W3C tutorials were used as a reference for python functions throughout this project.

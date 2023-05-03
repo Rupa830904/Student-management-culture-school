@@ -203,7 +203,7 @@ Go to "Settings" and navigate to Config Vars. Add the following config variables
 PORT : 8000
 Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
 The app will now be deployed to heroku
-![Live Link](https://student-management.herokuapp.com/)
+[Student-Management](https://student-management.herokuapp.com/)
 
 Clone Locally
 Open IDE of choice and type the following into the terminal:

@@ -157,11 +157,12 @@ Below are the test execution of positive functional tests:
 Negative input validation testing was performed on all menu options to ensure correct input. All options behaved as expected, alerting the user of invalid inoput and then asking for input again.
 
 Pep8 Validation
-All python code was ran through pep8online.com validator and any warnings or errors were fixed. Code then validated successfully.
+All python code was ran through pycodestyle validation and any warnings or errors were fixed. Code then validated successfully.
 
-In gitpod, warning was displayed by linter that env was imported but unused. This was being used by my env.py file during local development as it contained my database configuration variables so it was in fact used and the warning was ignored.
+![PEP8 validation](docs/screenshots/PEP8_pycodestyle.JPG)
 
-Pep8
+In CodeAnywhere, warning was displayed by linter that env was imported but unused. This was being used by my env.py file during local development as it contained my database configuration variables so it was in fact used and the warning was ignored.
+
 
 Bugs and Fixes
 Vehicles with the same reg were able to be added. A fix was implemented to ensure that duplicate vehicles with the same registration could not be added.

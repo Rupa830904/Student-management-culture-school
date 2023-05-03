@@ -85,7 +85,7 @@ Main Menu
 
 ### This feature will allow the user to remove a student only if the student is not registered in a course.
 
-![Remove Student Info]
+![Remove Student Info](docs/screenshots/Remove_Student.JPG)
 
 
 
@@ -123,9 +123,8 @@ This can be seen on all the menu screenshots above.
 
 Error Handling
 
-Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Database connection errors, Value errors.
+Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Value errors. For all types of data input errors user will be alerted with a message and given a option to go back to the corresponding menu.
 
-Features Left to Implement
 
 Logical Flow
 Main Menu
@@ -141,14 +140,19 @@ Course Menu
 - A google spreadsheet is created for this project https://docs.google.com/spreadsheets/d/1TndCTKtANLMzGCNryyoSZhjWc2OnZcVNVcEjNAU9mUU/edit#gid=0
 - This spreadsheet has two worksheetes named 'student' and 'course'
 
+![Student Worksheet](docs/screenshots/student_worksheet.JPG)
+
+![Course Worksheet](docs/screenshots/course_worksheet.JPG)
+
 
 
 
 Technologies
-Python - Python was the main language used to build the application.
-Python packages used:
-Gspread - This was used as data storage in order to store the bike and booking information.
-Screen-o-matic - This was used to screen record the Gif for the readme. It was originally an MP4 and ezgif.com was used to convert to GIF format.
+- Python - Python was the main language used to build the application.
+- Python packages used:
+   - Gspread - This was used as data storage in order to store the bike and booking information.
+   - 
+
 Testing
 Functional Testing
 Below are the test execution of positive functional tests:

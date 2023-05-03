@@ -171,10 +171,9 @@ def add_new_student():
 def del_student():
 
     """
-    Prompts user to provide student name to delete. 
+    Prompts user to provide student name to delete.
     Validate if the student has registered course
     Removes the student info if it is a valid student.
-    
     """
     unstrip_name_str = input("Plaese enter name of the student:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
@@ -184,7 +183,7 @@ def del_student():
     student_cell = list_student.find(name_str)
     course_cell = student_course.find(name_str)
     while student_cell is None:
-        unstrip_name_str = input("Please enter the valid student name to remove:")
+        unstrip_name_str = input("Please enter valid student name:")
         toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
         name_str = toconvert_name_str.lower()  # Covert to lower case
         student_cell = list_student.find(name_str)
@@ -205,21 +204,20 @@ def del_student():
 def update_student():
 
     """
-    Prompts user to provide student name to update info. 
+    Prompts user to provide student name to update info.
     Updates students's mobile no. or email as per user choice.
-    
     """
 
     os.system('clear')
 
     while True:
         list_student = SHEET.worksheet('student')
-        unstrip_name_str = input("Please choose the student to update info:") 
+        unstrip_name_str = input("Please choose the student to update info:")
         toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
         name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         while cell is None:
-            print(f"{ name_str} not a valid student.You will be redirected to main menu")
+            print(f"{ name_str} not a valid student.Redirecting to main menu")
             input("\nPress Enter to continue...\n")
             main_menu()
         row_num = cell.row
@@ -257,13 +255,13 @@ def update_student():
     input("\nPress Enter to continue...\n")
     students()
 
+
 def list_all_student():
 
     """
-    Display all user info table. 
+    Display all user info table.
     Gives user a choice to view the regsitered course or go back Main Menu.
-    If the registered course is chosen display the options to search course for a student.
-    
+    User leads to search course for a student based on choice.
     """
 
     os.system('clear')
@@ -288,9 +286,8 @@ def list_all_student():
 def find_student():
 
     """
-    Prompts user to provide student name to find info. 
+    Prompts user to provide student name to find info.
     Provide all user info if it is a valid student.
-    
     """
 
     os.system('clear')
@@ -299,7 +296,7 @@ def find_student():
         list_student = SHEET.worksheet('student')
         unstrip_name_str = input("Please type the student name to search:")
         toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
-        name_str = toconvert_name_str.lower()  # Covert to lower case 
+        name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         if cell is None:
             print(f"{name_str} is not a valid student in culture school")
@@ -307,8 +304,8 @@ def find_student():
             students()
         else:
             student_info = list_student.get_all_values()
-            df = pd.DataFrame(student_info, columns=['Name', 'PersonalNumber', 'Mobile', 'Email'])
-            row = df.loc[df['Name'] == name_str]
+            df = pd.DataFrame(student_info, columns=['', '', '', ''])
+            row = df.loc[df.iloc[:, 0] == name_str]
             print(row)
             input("\nPress Enter to continue...\n")
             students()
@@ -349,16 +346,15 @@ def course():
 def register_course():
 
     """
-    Prompts user to provide student name and the course name to register. 
+    Prompts user to provide student name and the course name to register.
     Updates the course registration field as per the user input.
-    
     """
 
     unstrip_name_str = input(Fore.GREEN + "Enter student name to register:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
-    classical_col = 1  # Column for classical course
-    modern_col = 2  # Column for modern course
+    c_col = 1  # Column for classical course
+    m_col = 2  # Column for modern course
     list_student = SHEET.worksheet('student')
     cell = list_student.find(name_str)
     while cell is None:
@@ -374,16 +370,14 @@ def register_course():
         if classical_cell is None:
             if modern_cell is None:
                 last_row = len(student_course.get_all_values())
-                student_course.update_cell(last_row + 1, classical_col, name_str)
-                student_course.update_cell(last_row + 1, modern_col, '')
-                '''student_course.update_cell(last_row + 1, date_col, today)'''
+                student_course.update_cell(last_row + 1, c_col, name_str)
+                student_course.update_cell(last_row + 1, m_col, '')
                 print(f"Student registered successfully")
                 input("\nPress Enter to continue...\n")
                 course()
             else:
                 row_num = modern_cell.row
-                student_course.update_cell(row_num, classical_col, name_str)
-                '''student_course.update_cell(row_num, date_col, today)'''
+                student_course.update_cell(row_num, c_col, name_str)
                 print(f"Student registered successfully")
                 input("\nPress Enter to continue...\n")
                 course()
@@ -395,16 +389,14 @@ def register_course():
         if modern_cell is None:
             if classical_cell is None:
                 last_row = len(student_course.get_all_values())
-                student_course.update_cell(last_row + 1, classical_col, '')
-                student_course.update_cell(last_row + 1, modern_col, name_str)
-                '''student_course.update_cell(last_row + 1, date_col, today)'''
+                student_course.update_cell(last_row + 1, c_col, '')
+                student_course.update_cell(last_row + 1, m_col, name_str)
                 print(f"Student registered successfully")
                 input("\nPress Enter to continue...\n")
                 course()
             else:
                 row_num = classical_cell.row
-                student_course.update_cell(row_num,  modern_col, name_str)
-                '''student_course.update_cell(row_num, date_col, today)'''
+                student_course.update_cell(row_num,  m_col, name_str)
                 print(f"Student registered successfully")
                 input("\nPress Enter to continue...\n")
                 course()
@@ -415,8 +407,8 @@ def register_course():
     elif course_str == "Both":
         student_course = SHEET.worksheet('course')
         last_row = len(student_course.get_all_values())
-        student_course.update_cell(last_row + 1, classical_col, name_str)
-        student_course.update_cell(last_row + 1, modern_col, name_str)
+        student_course.update_cell(last_row + 1, c_col, name_str)
+        student_course.update_cell(last_row + 1, m_col, name_str)
         print(f"Student registered successfully")
         input("\nPress Enter to continue...\n")
         course()
@@ -430,12 +422,9 @@ def register_course():
 def unregister_course():
 
     """
-    Prompts user to provide student name and the course name to unregister. 
+    Prompts user to provide student name and the course name to unregister.
     Updates the course registration field to unregister as per the user input.
-    
     """
-
-
     unstrip_name_str = input(Fore.RED + "Enter student name to unregister:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
@@ -496,11 +485,9 @@ def unregister_course():
 def search_register_course():
 
     """
-    Prompts user to provide student name to search for registered course. 
+    Prompts user to provide student name to search for registered course.
     Displays the registered. course for a student
-    
     """
-
 
     os.system('clear')
 

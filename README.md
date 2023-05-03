@@ -164,10 +164,10 @@ All python code was ran through pycodestyle validation and any warnings or error
 In CodeAnywhere, warning was displayed by linter that env was imported but unused. This was being used by my env.py file during local development as it contained my database configuration variables so it was in fact used and the warning was ignored.
 
 
-Bugs and Fixes
-Vehicles with the same reg were able to be added. A fix was implemented to ensure that duplicate vehicles with the same registration could not be added.
+## Bugs and Fixes
+Student name was being added at the end of the course column. Leaving the one corresponding blank cell if student is already registered to another course before.A fix was implemented to find the correct cell and update value to update the course registration for a student.
 
-Date validations had to be added that the end date was after the start date in several functions as it allowed a user to input an end date that was before the start date.
+A validation was added to check for registered course before user can remove a student from student sheet.User will be alerted to unregister the course first.
 
 Validation was implemented to ensure correct date format was input as this was causing errors when an invalid format was used.
 

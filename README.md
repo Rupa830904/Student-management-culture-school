@@ -157,6 +157,7 @@ Technologies
 - Python packages used:
    - Gspread - This was used as data storage in order to store the bike and booking information.
    - pandas - This was used to convert the worksheet data into a dataframe and then work on it.
+   - colorama - The was used to control the font colors for the program.
 
 # Testing
 ## Functional Testing
@@ -226,7 +227,15 @@ Note: If you want to use the application, follow the steps in the MongoDB Setup 
 
 
 Credits
-Code
 
+Gspread documentation - Followed the gspread documentation to understand gspread usage for different activities throughout the project.
 
-W3C tutorials were used as a reference for python functions throughout this project.
+[Gspread doc](https://docs.gspread.org/en/latest/)
+
+Example from the below link followed to validate the email with python.
+
+[validate email](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/)
+
+All the guidance and input from my mentor Gareth Mcgirr were followed throughout the project.
+
+W3C tutorials were used as a reference for python functions like pandas,colorama,os and  and  throughout this project.

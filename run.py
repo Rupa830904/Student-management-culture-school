@@ -43,6 +43,7 @@ def main_menu():
     print("*********")
     while True:
         try:
+            # Error handling if number not entered
             choice = int(input("Enter Choice: \n"))
         except ValueError:
             print("You didn't enter a number !")
@@ -78,6 +79,7 @@ def students():
 
     while True:
         try:
+            # Error handling if number not entered
             choice = int(input("Enter Choice: \n"))
         except ValueError:
             print("You didn't enter a number !")
@@ -113,13 +115,13 @@ def add_new_student():
     data_str = input("Enter your data here:")
     list_student = SHEET.worksheet('student')
     student_data = data_str.split(",")  # the values should be a list
-    if len(student_data) < 4:
+    if len(student_data) < 4:  # Handle error if not enough data provided
         print(f"Not enough data.Please try again!")
         input("\nPress Enter to continue...\n")
         students()
-    name_str = student_data[0].lower()
+    name_str = student_data[0].lower()  # convert to lower case
     student_cell = list_student.find(name_str)
-    while student_cell is not None:
+    while student_cell is not None:  # Handle user error if student exists
         print(f"Student already exists.Please try again!")
         input("\nPress Enter to continue...\n")
         students()
@@ -129,7 +131,7 @@ def add_new_student():
     mail_str = student_data[3]
 
     while True:
-        try:
+        try:  # Data validation for personal number be only digits
             int(pn_str)
             break
         except ValueError:
@@ -137,7 +139,7 @@ def add_new_student():
             input("\nPress Enter to continue...\n")
             students()
     while True:
-        try:
+        try:  # Data validation for mobile number be only digits
             int(mobile_str)
             break
         except ValueError:
@@ -146,7 +148,7 @@ def add_new_student():
             students()
     while True:
         try:
-            # validate and get info
+            # validate email and get info
             validate_email(mail_str)
             break
         except EmailNotValidError as e:
@@ -155,6 +157,7 @@ def add_new_student():
             students()
     while True:
         try:
+            # Data validation for personal number starts with YYYYMMDD
             datetime.strptime(pn_substr, '%Y%m%d')
             break
         except ValueError:
@@ -162,6 +165,7 @@ def add_new_student():
             input("\nPress Enter to continue...\n")
             students()
     if len(pn_str) == 12:
+        # Data validation for personal number be 12 digits
         student_validated = [name_str, pn_str, mobile_str, mail_str]
         list_student.append_row(student_validated, table_range="A1:D1")
         print(f"Student info updated successfully")
@@ -189,6 +193,7 @@ def del_student():
     student_cell = list_student.find(name_str)
     course_cell = student_course.find(name_str)
     while student_cell is None:
+        # Handle user error if try to remove invalid student
         print(f"{ name_str} not a valid student.Redirecting to main menu")
         input("\nPress Enter to continue...\n")
         main_menu()
@@ -199,6 +204,7 @@ def del_student():
         input("\nPress Enter to continue...\n")
         students()
     else:
+        # Handle user error if student has a registered course
         print(f"Student {name_str} must be unregistred from course first.")
         input("\nPress Enter to continue...\n")
         students()
@@ -222,6 +228,7 @@ def update_student():
         name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         while cell is None:
+            # Handle user error if try to update invalid student
             print(f"{ name_str} not a valid student.Redirecting to main menu")
             input("\nPress Enter to continue...\n")
             main_menu()
@@ -233,6 +240,7 @@ def update_student():
             mobile_str = input("Please enter new mobile:")
             while True:
                 try:
+                    # validate new mobile no.
                     int(mobile_str)
                     break
                 except ValueError:
@@ -247,6 +255,7 @@ def update_student():
             mail_str = input("Please enter new email:")
             while True:
                 try:
+                    # validate new email
                     validate_email(mail_str)
                     break
                 except EmailNotValidError as e:
@@ -272,6 +281,7 @@ def list_all_student():
     os.system('clear')
 
     while True:
+        # Display all student info in a dataframe
         list_student = SHEET.worksheet('student')
         data = list_student.get_all_values()
         df = pd.DataFrame(data, columns=['', '', '', ''])
@@ -304,6 +314,7 @@ def find_student():
         name_str = toconvert_name_str.lower()  # Covert to lower case
         cell = list_student.find(name_str)
         if cell is None:
+            # Handle user error if try to find an invalid student
             print(f"{name_str} is not a valid student in culture school")
             input("\nPress Enter to continue...\n")
             students()
@@ -332,6 +343,7 @@ def course():
 
     while True:
         try:
+            # Error handling if number not entered
             choice = int(input("Enter Choice: \n"))
         except ValueError:
             print("You didn't enter a number !")
@@ -367,6 +379,7 @@ def register_course():
     list_student = SHEET.worksheet('student')
     cell = list_student.find(name_str)
     while cell is None:
+        # Handle user error if try to register an invalid student
         print(f"{name_str} is not a valid student in culture school")
         input("\nPress Enter to continue...\n")
         course()
@@ -445,6 +458,7 @@ def unregister_course():
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
     while cell is None:
+        # Handle user error if try to unregister an invalid student
         print(f"Please enter a valid student name to unregister")
         input("\nPress Enter to continue...\n")
         course()
@@ -453,6 +467,7 @@ def unregister_course():
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
         if classical_cell is None:
+            # Handle user error if student is not registered to course
             print(f" {name_str} is not registered in {course_str}")
             input("\nPress Enter to continue...\n")
             course()
@@ -472,6 +487,7 @@ def unregister_course():
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
         if modern_cell is None:
+            # Handle user error if student is not registered to course
             print(f" {name_str} is not registered in {course_str}")
             input("\nPress Enter to continue...\n")
             course()
@@ -514,6 +530,7 @@ def search_register_course():
         course_info = student_course.get_all_values()
         df = pd.DataFrame(course_info, columns=['Classical', 'Modern'])
         if cell is None:
+            # Handle user error if try to search course for invalid student
             print(f"{name_str} Invalid student or not registered to a course.")
             input("\nPress Enter to continue...\n")
             course()

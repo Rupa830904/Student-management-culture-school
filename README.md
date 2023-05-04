@@ -160,7 +160,21 @@ Technologies
 
 # Testing
 ## Functional Testing
-### Below are the test execution of positive functional tests:
+Below are the test execution of positive functional tests:
+
+### Main menu functional testing
+
+![Main menu testing](docs/testings/main_menu_functional.JPG)
+
+### Student menu functional testing
+
+![Student menu testing](docs/testings/student_menu_functional.JPG)
+
+### Course menu functional testing
+
+![Course menu testing](docs/testings/course_menu_functional.JPG)
+
+
 
 
 ### Below are the test execution of negative functional tests:
@@ -182,7 +196,7 @@ A validation was added to check for registered course before user can remove a s
 
 Validation was implemented to ensure correct date format was input as this was causing errors when an invalid format was used.
 
-Deployment
+## Deployment
 
 
 The following git commands were used throughout development to push code to the remote repo:
@@ -194,16 +208,15 @@ git commit -m "commit message" - This command was used to commit changes to the 
 git push - This command was used to push all committed code to the remote repository on github.
 
 
-Heroku Deployment
+## Heroku Deployment
 The below steps were followed to deploy this project to Heroku:
 
 - Go to Heroku and click "New" to create a new app.
 - Choose an app name and region region, click "Create app".
 - Go to "Settings" and navigate to Config Vars. Add the following config variables: Add CREDS Variable.
 - Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
-- The app will now be deployed to heroku
-
-- [Student-Management-Culture-School](https://student-management.herokuapp.com/)
+- The app will now be deployed to heroku here
+[Student-Management-Culture-School](https://student-management.herokuapp.com/)
 
 ### Clone Locally
 Open IDE of choice and type the following into the terminal:

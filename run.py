@@ -371,11 +371,12 @@ def register_course():
         input("\nPress Enter to continue...\n")
         course()
     unstrip_course_str = input("Course to register(Classical/Modern/Both):")
-    course_str = unstrip_course_str.strip()  # Strip the user input
+    toconvert_course_str = unstrip_course_str.strip()  # Strip the user input
+    course_str = toconvert_course_str.lower()  # convert to lower
     student_course = SHEET.worksheet('course')
     classical_cell = student_course.find(query=name_str, in_column=1)
     modern_cell = student_course.find(query=name_str, in_column=2)
-    if course_str == "Classical":
+    if course_str == "classical":
         if classical_cell is None:
             if modern_cell is None:
                 last_row = len(student_course.get_all_values())
@@ -394,7 +395,7 @@ def register_course():
             print(f"Student is already registered to {course_str}")
             input("\nPress Enter to continue...\n")
             course()
-    elif course_str == "Modern":
+    elif course_str == "modern":
         if modern_cell is None:
             if classical_cell is None:
                 last_row = len(student_course.get_all_values())
@@ -413,7 +414,7 @@ def register_course():
             print(f"Student is already registered to {course_str}")
             input("\nPress Enter to continue...\n")
             course()
-    elif course_str == "Both":
+    elif course_str == "both":
         student_course = SHEET.worksheet('course')
         last_row = len(student_course.get_all_values())
         student_course.update_cell(last_row + 1, c_col, name_str)
@@ -439,7 +440,8 @@ def unregister_course():
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
     unstrip_course_str = input(Fore.RED + "Unregister(Classical/Modern/Both):")
-    course_str = unstrip_course_str.strip()  # Strip the user input
+    toconvert_course_str = unstrip_course_str.strip()  # Strip the user input
+    course_str = toconvert_course_str.lower()  # convert to lower
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
     while cell is None:
@@ -447,7 +449,7 @@ def unregister_course():
         name_str = input("Please enter the valid student name to unregister:")
         cell = student_course.find(name_str)
     row_num = cell.row
-    if course_str == "Classical":
+    if course_str == "classical":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
         if classical_cell is None:
@@ -466,7 +468,7 @@ def unregister_course():
             print(f" {name_str} unregistered successfully from {course_str}")
             input("\nPress Enter to continue...\n")
             course()
-    elif course_str == "Modern":
+    elif course_str == "modern":
         classical_cell = student_course.find(query=name_str, in_column=1)
         modern_cell = student_course.find(query=name_str, in_column=2)
         if modern_cell is None:
@@ -485,7 +487,7 @@ def unregister_course():
             print(f" {name_str} unregistered successfully from {course_str}")
             input("\nPress Enter to continue...\n")
             course()
-    elif course_str == "Both":
+    elif course_str == "both":
         student_course.delete_rows(row_num)
         print(f" {name_str} has been unregistered successfully")
         input("\nPress Enter to continue...\n")

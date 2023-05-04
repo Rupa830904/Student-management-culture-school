@@ -77,20 +77,24 @@ def students():
     print("*********")
 
     while True:
-        choice = input("Enter Choice: \n")
-        if choice == "1":
+        try:
+            choice = int(input("Enter Choice: \n"))
+        except ValueError:
+            print("You didn't enter a number !")
+            continue
+        if choice == 1:
             add_new_student()
             break
-        elif choice == "2":
+        elif choice == 2:
             update_student()
             break
-        elif choice == "3":
+        elif choice == 3:
             find_student()
             break
-        elif choice == "4":
+        elif choice == 4:
             del_student()
             break
-        elif choice == "0":
+        elif choice == 0:
             main_menu()
             break
         else:
@@ -103,6 +107,7 @@ def add_new_student():
     a new student.Validate user inputs andd to sudent info sheet
 
     """
+    os.system('clear')
     print(Fore.WHITE + "Enter Name,PersonalNumber(YYYYMMDDxxxx),Mobile, Email")
     print("Example:John,197908167777,76895600000,john@xxxx.com")
     data_str = input("Enter your data here:")
@@ -175,6 +180,7 @@ def del_student():
     Validate if the student has registered course
     Removes the student info if it is a valid student.
     """
+    os.system('clear')
     unstrip_name_str = input("Plaese enter name of the student:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Covert to lower case
@@ -183,10 +189,9 @@ def del_student():
     student_cell = list_student.find(name_str)
     course_cell = student_course.find(name_str)
     while student_cell is None:
-        unstrip_name_str = input("Please enter valid student name:")
-        toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
-        name_str = toconvert_name_str.lower()  # Covert to lower case
-        student_cell = list_student.find(name_str)
+        print(f"{ name_str} not a valid student.Redirecting to main menu")
+        input("\nPress Enter to continue...\n")
+        main_menu()
     row_num = student_cell.row
     if course_cell is None:
         list_student.delete_rows(row_num)
@@ -326,7 +331,11 @@ def course():
     print("*********")
 
     while True:
-        choice = int(input("Enter Choice: \n"))
+        try:
+            choice = int(input("Enter Choice: \n"))
+        except ValueError:
+            print("You didn't enter a number !")
+            continue
         if choice == 1:
             register_course()
             break
@@ -349,7 +358,7 @@ def register_course():
     Prompts user to provide student name and the course name to register.
     Updates the course registration field as per the user input.
     """
-
+    os.system('clear')
     unstrip_name_str = input(Fore.GREEN + "Enter student name to register:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case
@@ -425,6 +434,7 @@ def unregister_course():
     Prompts user to provide student name and the course name to unregister.
     Updates the course registration field to unregister as per the user input.
     """
+    os.system('clear')
     unstrip_name_str = input(Fore.RED + "Enter student name to unregister:")
     toconvert_name_str = unstrip_name_str.strip()  # Strip the user input
     name_str = toconvert_name_str.lower()  # Convert to lower case

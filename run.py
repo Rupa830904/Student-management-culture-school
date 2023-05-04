@@ -445,9 +445,9 @@ def unregister_course():
     student_course = SHEET.worksheet('course')
     cell = student_course.find(name_str)
     while cell is None:
-        print(f"Please enter a valid student name")
-        name_str = input("Please enter the valid student name to unregister:")
-        cell = student_course.find(name_str)
+        print(f"Please enter a valid student name to unregister")
+        input("\nPress Enter to continue...\n")
+        course()
     row_num = cell.row
     if course_str == "classical":
         classical_cell = student_course.find(query=name_str, in_column=1)

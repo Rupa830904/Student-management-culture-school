@@ -236,7 +236,7 @@ Open IDE of choice and type the following into the terminal:
 Project will now be cloned locally.
 
 
-Credits
+### Credits
 
 Gspread documentation - Followed the gspread documentation to understand gspread usage for different activities throughout the project.
 

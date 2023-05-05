@@ -121,7 +121,7 @@ All sub menus will have an option to return to the main menu, this will typicall
 This will allow the user to return to the main menu if they selected the wrong option or are finished with the particular menu.
 This can be seen on all the menu screenshots above.
 
-Error Handling
+## Error Handling
 
 Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Value errors. For all types of data input errors user will be alerted with a message and given a option to go back to the corresponding menu. Testings were executed as below.
 

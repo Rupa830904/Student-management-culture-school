@@ -115,7 +115,7 @@ This feature will allow the user to unregister the student to classical/Modern o
 
 As a User, I would like to be able to return to the main menu without having to restart the application.
 
-IMPREMENTATION
+IMPLEMENTATION
 
 All sub menus will have an option to return to the main menu, this will typically be 0.
 This will allow the user to return to the main menu if they selected the wrong option or are finished with the particular menu.

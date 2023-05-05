@@ -176,19 +176,18 @@ Below are the test execution of positive functional tests:
 
 ![Course menu testing](docs/testings/course_menu_functional.JPG)
 
+Below are the test execution of negative functional tests:
+
+Negative input validation testing was performed on all menu options to ensure correct input. All options behaved as expected, alerting the user of invalid input and then asking for input again.
+
 ### Student menu functional negative testing
 
-[Student menu testing](docs/testings/student_menu_functional_neg.JPG)
+![Student menu testing](docs/testings/student_menu_functional_neg.JPG)
 
 ### Course menu functional negative testing
 
 ![Course menu testing](docs/testings/course_menu_functional_neg.JPG)
 
-
-
-### Below are the test execution of negative functional tests:
-
-Negative input validation testing was performed on all menu options to ensure correct input. All options behaved as expected, alerting the user of invalid input and then asking for input again.
 
 ## Pep8 Validation
 All python code was ran through pycodestyle validation and any warnings or errors were fixed. Code then validated successfully.

@@ -234,7 +234,6 @@ Open IDE of choice and type the following into the terminal:
  - git clone https://github.com/Rupa830904/Student-management-culture-school.git
 
 Project will now be cloned locally.
-Note: If you want to use the application, follow the steps in the MongoDB Setup first then create an env.py file with the following variable:
 
 
 Credits

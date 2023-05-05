@@ -197,7 +197,7 @@ All python code was ran through pycodestyle validation and any warnings or error
 
 All Python code was validated with Python Linter as below.
 
-![PEP8 validation2](docs/screenshots/Python_Linter.JPG)
+![PEP8 validation2](docs/testings/Python_Linter.JPG)
 
 
 ## Bugs and Fixes

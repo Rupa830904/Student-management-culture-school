@@ -71,19 +71,19 @@ The user must input a correct number corresponding to each menu or they will be 
 This feature will allow the user to easily access the sub menus to each category in order to perform the operations needed.
 Main Menu
 
-### This feature will allow the user to easily add student.
+This feature will allow the user to easily add student.
 
 ![Add Student](docs/screenshots/Add_student.JPG)
 
-### This feature will allow the user to easily update student info (Email/Mobile No.):
+This feature will allow the user to easily update student info (Email/Mobile No.):
 
 ![Update Student Info](docs/screenshots/Update_student_info.JPG)
 
-### This feature will allow the user to find student info based on student name input.
+This feature will allow the user to find student info based on student name input.
 
 ![Find Student Info](docs/screenshots/Find_student.JPG)
 
-### This feature will allow the user to remove a student only if the student is not registered in a course.
+This feature will allow the user to remove a student only if the student is not registered in a course.
 
 ![Remove Student Info](docs/screenshots/Remove_Student.JPG)
 

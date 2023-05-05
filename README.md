@@ -123,8 +123,9 @@ This can be seen on all the menu screenshots above.
 
 Error Handling
 
-Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Value errors. For all types of data input errors user will be alerted with a message and given a option to go back to the corresponding menu.
+Error handling was implemented throughout the application with the use of try/except statements to handle exceptions raised for things like, None type values, Value errors. For all types of data input errors user will be alerted with a message and given a option to go back to the corresponding menu. Testings were executed as below.
 
+![Error Handling testing](docs/testings/Error_handling.JPG)
 
 ## Logical Flow
 
@@ -175,6 +176,13 @@ Below are the test execution of positive functional tests:
 
 ![Course menu testing](docs/testings/course_menu_functional.JPG)
 
+### Student menu functional negative testing
+
+[Student menu testing](docs/testings/student_menu_functional_neg.JPG)
+
+### Course menu functional negative testing
+
+![Course menu testing](docs/testings/course_menu_functional_neg.JPG)
 
 
 
@@ -185,9 +193,11 @@ Negative input validation testing was performed on all menu options to ensure co
 ## Pep8 Validation
 All python code was ran through pycodestyle validation and any warnings or errors were fixed. Code then validated successfully.
 
-![PEP8 validation](docs/screenshots/PEP8_pycodestyle.JPG)
+![PEP8 validation1](docs/screenshots/PEP8_pycodestyle.JPG)
 
-In CodeAnywhere, warning was displayed by linter that env was imported but unused. This was being used by my env.py file during local development as it contained my database configuration variables so it was in fact used and the warning was ignored.
+All Python code was validated with Python Linter as below.
+
+![PEP8 validation2](docs/screenshots/Python_Linter.JPG)
 
 
 ## Bugs and Fixes
@@ -195,7 +205,6 @@ Student name was being added at the end of the course column. Leaving the one co
 
 A validation was added to check for registered course before user can remove a student from student sheet.User will be alerted to unregister the course first.
 
-Validation was implemented to ensure correct date format was input as this was causing errors when an invalid format was used.
 
 ## Deployment
 
@@ -222,6 +231,8 @@ The below steps were followed to deploy this project to Heroku:
 ### Clone Locally
 Open IDE of choice and type the following into the terminal:
 
+ - git clone https://github.com/Rupa830904/Student-management-culture-school.git
+
 Project will now be cloned locally.
 Note: If you want to use the application, follow the steps in the MongoDB Setup first then create an env.py file with the following variable:
 
@@ -238,4 +249,4 @@ Example from the below link followed to validate the email with python.
 
 All the guidance and input from my mentor Gareth Mcgirr were followed throughout the project.
 
-W3C tutorials were used as a reference for python functions like pandas,colorama,os and  and  throughout this project.
+W3C tutorials were used as a reference for python functions like pandas,colorama,os throughout this project.

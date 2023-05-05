@@ -405,6 +405,7 @@ def register_course():
                 input("\nPress Enter to continue...\n")
                 course()
         else:
+            # Handle user error if student already registered to course
             print(f"Student is already registered to {course_str}")
             input("\nPress Enter to continue...\n")
             course()
@@ -424,6 +425,7 @@ def register_course():
                 input("\nPress Enter to continue...\n")
                 course()
         else:
+            # Handle user error if student already registered to course
             print(f"Student is already registered to {course_str}")
             input("\nPress Enter to continue...\n")
             course()
@@ -436,6 +438,7 @@ def register_course():
         input("\nPress Enter to continue...\n")
         course()
     else:
+        # Handle user error if try to resgister to invalid course
         print(f"Sorry we don't have that course yet")
         input("\nPress Enter to continue...\n")
         course()
